@@ -5,7 +5,11 @@ public class QueenBoard {
 
 	public static void main(String[] args) {
 		QueenBoard A = new QueenBoard ( 4 );
-		A.changeSquares( 1 , 1 , 1);
+		A.addQueen( 1 , 1);
+		System.out.println( A );
+		A.addQueen( 2 , 1 );
+		System.out.println( A );
+		A.removeQueen( 1 , 1 );
 		System.out.println( A );
 	}
 
@@ -16,7 +20,7 @@ public class QueenBoard {
 
 	private boolean addQueen ( int r , int c ) {
 		if ( this.board[r][c] == 0 ) {
-			this.board[r][c] -= 1;
+			changeSquares ( r , c , 1 );
 			return true;
 		}
 		return false;
@@ -24,7 +28,7 @@ public class QueenBoard {
 
 	private boolean removeQueen ( int r , int c ) {
 		if ( this.board[r][c] == -1 ) {
-			this.board[r][c] += 1;
+			changeSquares ( r , c , -1 );
 			return true;
 		}
 		return false;
@@ -35,10 +39,14 @@ public class QueenBoard {
 	}
 
 	private void changeSquares ( int r , int c , int increment ) {
-		board[r][c] -= increment * 2;
-		for ( int i = 0 ; i < this.size ; i++ ) {
-			for ( int j = 0 ; j < this.size ; j++ ) {
-				// if ( Math.abs( ))
+		board[r][c] -= increment;
+		for ( int i = 1 ; r+i < this.size || c+i < this.size ; i++ ) {
+			board[r+i][c] += increment;
+			if ( c - i >= 0) {
+				board[r+i][c-i] += increment;
+			}
+			if ( c + i < this.size) {
+				board[r+i][c+i] += increment;
 			}
 		}
 	}
@@ -49,6 +57,9 @@ public class QueenBoard {
 			for ( int j = 0 ; j < board.length ; j++ ) {
 				if ( board[i][j] < 0 ) {
 					output += "Q ";
+				}
+				else if ( board[i][j] > 0 ) {
+					output += "X ";
 				}
 				else {
 					output += "_ ";
@@ -64,12 +75,33 @@ public class QueenBoard {
 			return false;
 		}
 		else {
-			return this.solveHelp( 0 , 0 );
+			return this.solveHelp( 0 );
 		}
 	}
 
-	public boolean solveHelp ( int row , int col ) {
-		return true;
+	public boolean solveHelp ( int row ) {
+		if ( row == this.size ) {
+			return true;
+		}
+		for (int i = 0 ; i < this.size ; i++ ) {
+			// place queen
+			if ( solveHelp ( row + 1 ) ) {
+				return true;
+			}
+			// remove queen
+		}
+		return false;
 	}
 
 }
+
+/* solve help only needs row/column 
+-> base case is at the last one
+loop through column/row to place queens
+place queen
+-> if (next column is possible), return true
+-> if cannot place queen in next column, remove queen
+return false outside of loop
+
+
+*/
