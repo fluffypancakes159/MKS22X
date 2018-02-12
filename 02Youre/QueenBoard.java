@@ -11,6 +11,7 @@ public class QueenBoard {
 		System.out.println( A );
 		A.removeQueen( 1 , 1 );
 		System.out.println( A );
+		A.solve( );
 	}
 
 	public QueenBoard ( int size ) {
@@ -18,7 +19,7 @@ public class QueenBoard {
 		this.size = size;
 	}
 
-	private boolean addQueen ( int r , int c ) {
+	private boolean addQueen ( int r , int c ) { // make this non-column-specific
 		if ( this.board[r][c] == 0 ) {
 			changeSquares ( r , c , 1 );
 			return true;
@@ -84,7 +85,7 @@ public class QueenBoard {
 			return true;
 		}
 		for (int i = 0 ; i < this.size ; i++ ) {
-			// place queen
+			// addQueen
 			if ( solveHelp ( row + 1 ) ) {
 				return true;
 			}
