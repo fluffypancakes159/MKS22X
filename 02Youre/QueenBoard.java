@@ -60,7 +60,7 @@ public class QueenBoard {
 	}
 
 	public boolean solve ( ) {
-		if ( this.size <= 3 ) {
+		if ( this.size == 2 || this.size == 3 ) { // size 2 and 3 don't work
 			return false;
 		}
 		else {
