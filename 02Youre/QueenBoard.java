@@ -9,7 +9,7 @@ public class QueenBoard {
 		QueenBoard A = new QueenBoard ( 3 );
 		QueenBoard B = new QueenBoard ( 4 );
 		QueenBoard C = new QueenBoard ( 5 );
-		QueenBoard D = new QueenBoard ( 6 );
+		QueenBoard D = new QueenBoard ( 21 );
 		/*
 		A.addQueen( 1 , 1);
 		System.out.println( A );
