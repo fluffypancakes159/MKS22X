@@ -1,17 +1,44 @@
+import java.util.*;
+
 public class QueenBoard {
 	
 	private int[][]board;
 	private int size;
 
-	public static void main(String[] args) {
-		QueenBoard A = new QueenBoard ( 4 );
+	public static void main(String[] args) { //testing stuff
+		QueenBoard A = new QueenBoard ( 3 );
+		QueenBoard B = new QueenBoard ( 4 );
+		QueenBoard C = new QueenBoard ( 5 );
+		QueenBoard D = new QueenBoard ( 6 );
+		/*
 		A.addQueen( 1 , 1);
 		System.out.println( A );
-		A.addQueen( 2 , 1 );
+		A.addQueen( 2 , 3);
 		System.out.println( A );
 		A.removeQueen( 1 , 1 );
 		System.out.println( A );
+		A.removeQueen( 2 , 3 );
+		System.out.println( A );
+		*/
+		
+		System.out.println( A );
+		System.out.println( B );
+		System.out.println( C );
+		System.out.println( D );
+
+		// A.addQueen( 0 , 0);
+
 		A.solve( );
+		System.out.println( A );
+		B.solve( );
+		System.out.println( B );
+		C.solve( );
+		System.out.println( C );
+		D.solve( );
+		System.out.println( D );
+		// B.clearBoard( );
+		// B.countSolutions( );
+		
 	}
 
 	public QueenBoard ( int size ) {
@@ -41,21 +68,34 @@ public class QueenBoard {
 
 	private void changeSquares ( int r , int c , int increment ) {
 		board[r][c] -= increment;
-		for ( int i = 1 ; r+i < this.size || c+i < this.size ; i++ ) {
-			board[r+i][c] += increment;
-			if ( c - i >= 0) {
-				board[r+i][c-i] += increment;
+		for ( int i = 1 ; i < size ; i++ ) {
+			if ( r + i < this.size) {
+				board[r+i][c] += increment;
+				if ( c - i >= 0) {
+					board[r+i][c-i] += increment;
+					board[r][c-i] += increment;
+				}
+				if ( c + i < this.size) {
+					board[r+i][c+i] += increment;
+					board[r][c+i] += increment;
+				}
 			}
-			if ( c + i < this.size) {
-				board[r+i][c+i] += increment;
+			else {
+				if ( c - i >= 0) {
+					board[r][c-i] += increment;
+				}
+				if ( c + i < this.size) {
+					board[r][c+i] += increment;
+				}
 			}
 		}
 	}
 
 	public String toString ( ) {
 		String output = "";
-		for ( int i = 0 ; i < board.length ; i++ ) {
-			for ( int j = 0 ; j < board.length ; j++ ) {
+		for ( int i = 0 ; i < this.board.length ; i++ ) {
+			for ( int j = 0 ; j < this.board.length ; j++ ) {
+				
 				if ( board[i][j] < 0 ) {
 					output += "Q ";
 				}
@@ -65,13 +105,26 @@ public class QueenBoard {
 				else {
 					output += "_ ";
 				}
+				
+				// output += "" + board[i][j] + " ";
 			}
 			output += "\n";
 		}
 		return output;
 	}
 
+	private void emptyCheck ( ) {
+		for ( int i = 0 ; i < this.board.length ; i++ ) {
+			for ( int j = 0 ; j < this.board.length ; j++ ) {
+				if ( this.board[i][j] != 0 ) {
+					throw new IllegalStateException ( "Board should be empty >:(" );
+				}
+			}
+		}
+	}
+
 	public boolean solve ( ) {
+		this.emptyCheck( );
 		if ( this.size == 2 || this.size == 3 ) { // size 2 and 3 don't work
 			return false;
 		}
@@ -85,24 +138,15 @@ public class QueenBoard {
 			return true;
 		}
 		for (int i = 0 ; i < this.size ; i++ ) {
-			// addQueen
-			if ( solveHelp ( row + 1 ) ) {
-				return true;
+			if ( addQueen( row , i ) ) {
+				// System.out.println( this + "\nAdded Queen");
+				if ( solveHelp ( row + 1 ) ) {
+					return true;
+				}
+				this.removeQueen ( row , i );
+				// System.out.println( this + "\nRemoved Queen");
 			}
-			// remove queen
 		}
 		return false;
 	}
-
 }
-
-/* solve help only needs row/column 
--> base case is at the last one
-loop through column/row to place queens
-place queen
--> if (next column is possible), return true
--> if cannot place queen in next column, remove queen
-return false outside of loop
-
-
-*/
