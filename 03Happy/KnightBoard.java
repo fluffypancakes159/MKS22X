@@ -1,13 +1,20 @@
-import java.util.*;
-
 public class KnightBoard {
 
 	public int[][]board;
 	public int length;
 	public int width;
+	public static final int[][]moves = { { 2 , 1  } ,
+									  { 2 , -1 } , 
+									  { -2 , 1 } , 
+									  { -2 , -1 } , 
+									  { 1 , 2 } , 
+									  { 1 , -2 } , 
+									  { -1 , 2 } , 
+									  { -1 , -2 } };
 
 	public static void main(String[] args) {
-		
+		KnightBoard A = new KnightBoard ( 4 , 5 );
+		System.out.println( A );
 	}
 
 	public KnightBoard ( int rows , int cols ) {
@@ -53,7 +60,31 @@ public class KnightBoard {
 
 	public boolean solve ( int row , int col ) {
 		this.emptyCheck( );
-		return true;
+		if ( row < 3 && col < 3 ) {
+			return false;
+		} 
+
+		return solveHelp ( 0 , 0 , 1 );
+	}
+
+	public boolean solveHelp ( int row , int col , int level ) {
+		if ( level == row * col ) {
+			return true;
+		}
+		for ( int i = 0 ; i < moves.length ; i++ ) {
+			if ( moveKnight ( row , col , moves[i] ) ) {
+				if ( solveHelp ( row , col , level + 1 ) ) {
+					return true;
+				}
+			}
+
+		}
+	}
+
+	public boolean moveKnight ( int row , int col , int[]move ) {
+		return true; // check if move leaves knight out of bounds
+
+
 	}
 
 	public int countSolutions ( ) {
