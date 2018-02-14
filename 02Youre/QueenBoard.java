@@ -4,6 +4,7 @@ public class QueenBoard {
 	
 	private int[][]board;
 	private int size;
+	private int solutions;
 
 	public static void main(String[] args) { //testing stuff
 		QueenBoard A = new QueenBoard ( 3 );
@@ -20,16 +21,20 @@ public class QueenBoard {
 		A.removeQueen( 2 , 3 );
 		System.out.println( A );
 		*/
-		
+		/*
 		System.out.println( A );
 		System.out.println( B );
 		System.out.println( C );
 		System.out.println( D );
-
+		*/
 		// A.addQueen( 0 , 0);
-
+		/*
 		A.solve( );
 		System.out.println( A );
+		*/
+		System.out.println( B.countSolutions( ) );
+		System.out.println( C.countSolutions( ) );
+		/* 
 		B.solve( );
 		System.out.println( B );
 		C.solve( );
@@ -38,12 +43,14 @@ public class QueenBoard {
 		System.out.println( D );
 		// B.clearBoard( );
 		// B.countSolutions( );
+		*/
 		
 	}
 
 	public QueenBoard ( int size ) {
 		board = new int[size][size];
 		this.size = size;
+		this.solutions = 0;
 	}
 
 	private boolean addQueen ( int r , int c ) { // make this non-column-specific
@@ -62,8 +69,9 @@ public class QueenBoard {
 		return false;
 	}
 	
-	private void clearBoard ( ) {
+	public void clearBoard ( ) {
 		this.board = new int[this.size][this.size];
+		this.solutions = 0;
 	}
 
 	private void changeSquares ( int r , int c , int increment ) {
@@ -149,4 +157,33 @@ public class QueenBoard {
 		}
 		return false;
 	}
+
+	public int countSolutions ( ) {
+		this.emptyCheck( );
+		if ( this.size == 2 || this.size == 3 ) { // size 2 and 3 don't work
+			return 0;
+		}
+		else {
+			this.countHelp( 0 );
+			return this.solutions;
+		}
+	}
+
+	public boolean countHelp ( int row ) {
+		// System.out.println( this.solutions );
+		if ( row == this.size ) {
+			this.solutions++;
+			return false;
+		}
+		for (int i = 0 ; i < this.size ; i++ ) {
+			if ( addQueen( row , i ) ) {
+				if ( countHelp ( row + 1 ) ) {
+					return true;
+				}
+				this.removeQueen ( row , i );
+			}
+		}
+		return false;
+	}
+
 }
