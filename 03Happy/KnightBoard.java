@@ -13,7 +13,11 @@ public class KnightBoard {
 									  { -1 , -2 } };
 
 	public static void main(String[] args) {
-		KnightBoard A = new KnightBoard ( 4 , 5 );
+		KnightBoard A = new KnightBoard ( 5 , 5 );
+		System.out.println( A );
+		/*A.moveKnight( 2 , 2 , 1 );
+		System.out.println( A );*/
+		System.out.println( A.solve( 2 , 2 ) );
 		System.out.println( A );
 	}
 
@@ -58,33 +62,52 @@ public class KnightBoard {
 		}
 	}
 
+	private void onBoardCheck ( int row , int col ) {
+		if ( row >= length || row < 0 || col >= width  || col < 0 ) {
+			throw new IllegalArgumentException ( "Starting posiiton outside board" );
+		}
+	}
+
 	public boolean solve ( int row , int col ) {
+		this.onBoardCheck( row , col );
 		this.emptyCheck( );
-		if ( row < 3 && col < 3 ) {
+		if ( length < 3 && width < 3 ) {
 			return false;
 		} 
-
-		return solveHelp ( 0 , 0 , 1 );
+		return solveHelp ( row , col , 1 );
 	}
 
 	public boolean solveHelp ( int row , int col , int level ) {
-		if ( level == row * col ) {
+		if ( level == length * width + 1) {
 			return true;
 		}
-		for ( int i = 0 ; i < moves.length ; i++ ) {
-			if ( moveKnight ( row , col , moves[i] ) ) {
-				if ( solveHelp ( row , col , level + 1 ) ) {
+		if ( moveKnight ( row , col , level ) ) {
+			for ( int i = 0 ; i < 8 ; i++ ) {
+				if ( solveHelp ( row + moves[i][0] , col + moves[i][1] , level + 1 ) ) {
 					return true;
 				}
+				// unmoveKnight ( row , col );
 			}
-
+			unmoveKnight ( row , col );
 		}
+		return false;
 	}
 
-	public boolean moveKnight ( int row , int col , int[]move ) {
-		return true; // check if move leaves knight out of bounds
+	public boolean moveKnight ( int row , int col , int level ) {
+		if ( row >= length || row < 0 || col >= width || col < 0 || board[row][col] != 0 ) {
+			return false;
+		}
+		board[row][col] = level;
+		System.out.println ( this );
+		return true;
+	}
 
-
+	public boolean unmoveKnight ( int row , int col ) {
+		if ( row >= length || row < 0 || col >= width  || col < 0 ) {
+			return false;
+		}
+		board[row][col] = 0;
+		return true;
 	}
 
 	public int countSolutions ( ) {
