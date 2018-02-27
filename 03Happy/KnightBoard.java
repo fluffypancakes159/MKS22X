@@ -11,10 +11,30 @@ public class KnightBoard {
 									  { 1 , -2 } , 
 									  { -1 , 2 } , 
 									  { -1 , -2 } };
+	public int solutions;
 
 	public static void main(String[] args) {
-		KnightBoard A = new KnightBoard ( 4 , 5 );
+		KnightBoard A = new KnightBoard ( 5 , 5 );
+		KnightBoard B = new KnightBoard ( 6 , 6 );
+		KnightBoard C = new KnightBoard ( 1 , 1 );
 		System.out.println( A );
+		/*A.moveKnight( 2 , 2 , 1 );
+		System.out.println( A );*/
+		A.solve( 0 , 0 );
+		System.out.println( A );
+		
+		int totalSolutions = 0;
+		for ( int i = 0 ; i < B.length ; i++ ) {
+			for ( int j = 0 ; j < B.width ; j++ ) {
+				totalSolutions += B.countSolutions( i , j );
+				B.clearBoard( );
+			}
+		}
+		System.out.println ( totalSolutions );
+		
+		// C.solve( 0 , 0 );
+		System.out.println( C.countSolutions( 0 , 0 ) );
+
 	}
 
 	public KnightBoard ( int rows , int cols ) {
@@ -24,6 +44,7 @@ public class KnightBoard {
 		this.length = rows;
 		this.width = cols;
 		this.board = new int[this.length][this.width]; 
+		this.solutions = 0;
 	}
 
 	public String toString ( ) {
@@ -48,6 +69,11 @@ public class KnightBoard {
 		return output;
 	}
 
+	public void clearBoard ( ) {
+		this.board = new int[this.length][this.width];
+		this.solutions = 0;
+	}
+
 	private void emptyCheck ( ) {
 		for ( int i = 0 ; i < this.length ; i++ ) {
 			for ( int j = 0 ; j < this.width ; j++ ) {
@@ -58,38 +84,79 @@ public class KnightBoard {
 		}
 	}
 
-	public boolean solve ( int row , int col ) {
-		this.emptyCheck( );
-		if ( row < 3 && col < 3 ) {
-			return false;
-		} 
-
-		return solveHelp ( 0 , 0 , 1 );
+	private void onBoardCheck ( int row , int col ) {
+		if ( row >= length || row < 0 || col >= width  || col < 0 ) {
+			throw new IllegalArgumentException ( "Starting posiiton outside board" );
+		}
 	}
 
-	public boolean solveHelp ( int row , int col , int level ) {
-		if ( level == row * col ) {
+	public boolean solve ( int row , int col ) {
+		this.onBoardCheck( row , col );
+		this.emptyCheck( );
+		return solveHelp ( row , col , 1 );
+	}
+
+	private boolean solveHelp ( int row , int col , int level ) {
+		if ( level == length * width + 1) { // add one to check the level after all squares have been filled
 			return true;
 		}
-		for ( int i = 0 ; i < moves.length ; i++ ) {
-			if ( moveKnight ( row , col , moves[i] ) ) {
-				if ( solveHelp ( row , col , level + 1 ) ) {
+		if ( moveKnight ( row , col , level ) ) {
+			for ( int i = 0 ; i < 8 ; i++ ) {
+				if ( solveHelp ( row + moves[i][0] , col + moves[i][1] , level + 1 ) ) {
 					return true;
 				}
+				// unmoveKnight ( row , col );
 			}
-
+			unmoveKnight ( row , col );
 		}
+		return false;
 	}
 
-	public boolean moveKnight ( int row , int col , int[]move ) {
-		return true; // check if move leaves knight out of bounds
-
-
+	private boolean moveKnight ( int row , int col , int level ) {
+		if ( row >= length || row < 0 || col >= width || col < 0 || board[row][col] != 0 ) {
+			return false;
+		}
+		board[row][col] = level;
+		// System.out.println ( this );
+		return true;
 	}
 
-	public int countSolutions ( ) {
+	private boolean unmoveKnight ( int row , int col ) {
+		if ( row >= length || row < 0 || col >= width  || col < 0 ) {
+			return false;
+		}
+		board[row][col] = 0;
+		return true;
+	}
+
+	public int countSolutions ( int row , int col ) {
 		this.emptyCheck( );
-		return 0;
+		this.onBoardCheck( row , col );
+		if ( length < 3 && width < 3 ) {
+			return 0;
+		} 
+		countHelp( row , col , 1 );
+		return solutions;
+	}
+
+	public boolean countHelp ( int row , int col , int level) {
+		if ( level == length * width + 1) { 
+			// this.solutions++;
+			return false;
+		}
+		if ( moveKnight ( row , col , level ) ) {
+			for ( int i = 0 ; i < 8 ; i++ ) {
+				if ( countHelp ( row + moves[i][0] , col + moves[i][1] , level + 1 ) ) {
+					return true;
+				}
+				// unmoveKnight ( row , col );
+			}
+			if ( level == length * width ) {
+				solutions++;
+			}
+			unmoveKnight ( row , col );
+		}
+		return false;
 	}
 
 }
