@@ -15,7 +15,7 @@ public class KnightBoard {
 
 	public static void main(String[] args) {
 		KnightBoard A = new KnightBoard ( 5 , 5 );
-		KnightBoard B = new KnightBoard ( 6 , 6 );
+		KnightBoard B = new KnightBoard ( 5 , 5 );
 		KnightBoard C = new KnightBoard ( 1 , 1 );
 		System.out.println( A );
 		/*A.moveKnight( 2 , 2 , 1 );
