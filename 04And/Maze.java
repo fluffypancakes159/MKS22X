@@ -20,16 +20,32 @@ public class Maze{
       3. When the file is not found OR the file is invalid (not exactly 1 E and 1 S) then: print a meaningful error and exit the program.
 
     */
+    public static void main(String[]args) {
+	
+    }
+    
 
-    public Maze(String filename){
-	try {
-	    Scanner file = new Scanner( new File( filename ) );
-	    while ( file.hasNextLine() ) {
-		
-	    }
+    public Maze(String filename) throws FileNotFoundException {
+	Scanner file = new Scanner(new File(filename));
+	int lineSize = 0;
+	if (file.hasNextLine( )) {
+	    lineSize = file.nextLine( ).length( );
 	}
-	catch ( FileNotFoundException e ) {
-	    throw new FileNotFoundException ( "Where's the file?" );
+	else {
+	    throw new IllegalStateException( "why are there no lines" );
+	}
+	int lineCount = 1; // start at one because the first line was used to measure the width of the array
+	while (file.hasNextLine( )) {
+	    lineCount++;
+	}
+        maze = new char[lineCount][lineSize];
+	file.close( );
+	Scanner file2 = new Scanner(new File(filename));
+	for ( int i = 0 ; i < maze.length ; i++ ) {
+	    for ( int j = 0 ; j < maze[0].length ; j++ ) {
+		maze[i][j] = file2.nextLine( ).charAt(j);
+	    }
+	    file2.next( ); // get rid of \n
 	}
     }
     
