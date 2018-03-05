@@ -3,6 +3,7 @@ import java.io.*;
 public class Maze{
 
     private char[][]maze;
+    private int length, width;
     private boolean animate;//false by default
 
     /*Constructor loads a maze text file, and sets animate to false by default.
@@ -21,34 +22,71 @@ public class Maze{
 
     */
     public static void main(String[]args) {
-	
+      try {
+        Maze A = new Maze ( "data1.dat" );
+        Maze B = new Maze ( "data2.dat" );
+        Maze C = new Maze ( "data3.dat" );
+        System.out.println( A );
+        System.out.println( B );
+        System.out.println( C );
+      }
+      catch ( FileNotFoundException e ) {
+        System.out.println ( "uh oh");
+      }
     }
     
 
-    public Maze(String filename) throws FileNotFoundException {
-	Scanner file = new Scanner(new File(filename));
-	int lineSize = 0;
-	if (file.hasNextLine( )) {
-	    lineSize = file.nextLine( ).length( );
-	}
-	else {
-	    throw new IllegalStateException( "why are there no lines" );
-	}
-	int lineCount = 1; // start at one because the first line was used to measure the width of the array
-	while (file.hasNextLine( )) {
-	    lineCount++;
-	}
+    public Maze(String filename) throws FileNotFoundException , IllegalStateException {
+      try {
+	      Scanner file = new Scanner(new File(filename));
+	      int lineSize = 0;
+        int lineCount = 0;
+        String line = "";
+	      while (file.hasNextLine( )) {
+	        lineCount++;
+          line = file.nextLine( );
+	      }
+        lineSize = line.length( ); 
         maze = new char[lineCount][lineSize];
-	file.close( );
-	Scanner file2 = new Scanner(new File(filename));
-	for ( int i = 0 ; i < maze.length ; i++ ) {
-	    for ( int j = 0 ; j < maze[0].length ; j++ ) {
-		maze[i][j] = file2.nextLine( ).charAt(j);
-	    }
-	    file2.next( ); // get rid of \n
-	}
+        length = lineCount;
+        width = lineSize;
+	      file.close( );
+        int numS = 0;
+        int numE = 0;
+	      Scanner file2 = new Scanner(new File(filename));
+	      for ( int i = 0 ; i < length ; i++ ) {
+          line = file2.nextLine( );
+          // System.out.println( line );
+	        for ( int j = 0 ; j < width ; j++ ) {
+		        maze[i][j] = line.charAt(j);
+            if ( line.charAt(j) == 'S' ) {
+              numS++;
+            }
+            if ( line.charAt(j) == 'E' ) {
+              numE++;
+            }
+	        }
+	      }
+        if ( numS != 1 || numE != 1 ) {
+          throw new IllegalStateException ( "incorrect amount of starts and/or ends" );
+        }
+      }
+      catch ( FileNotFoundException e ) {
+        // throw new FileNotFoundException ( "where the file at");
+        System.out.println( "big uh oh");
+      }
     }
     
+    public String toString ( ) {
+      String output = "";
+      for ( int i = 0 ; i < length ; i++ ) {
+        for ( int j = 0 ; j < width ; j++ ) {
+          output += maze[i][j];
+        }
+        output += "\n";
+      }
+      return output;
+    }
 
     private void wait(int millis){
          try {
@@ -89,7 +127,7 @@ public class Maze{
             //and start solving at the location of the s.
 
             //return solve(???,???);
-
+      return 0;
     }
 
     /*
