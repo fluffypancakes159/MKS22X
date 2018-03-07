@@ -4,6 +4,7 @@ public class Maze{
 
     private char[][]maze;
     private int length, width;
+    public int steps;
     private boolean animate;//false by default
     private static int[][]moves = { {1,0} , {-1,0} , {0,1} , {0,-1} };
 
@@ -31,7 +32,7 @@ public class Maze{
         Maze C = new Maze ( "data3.dat" );
         C.setAnimate(true);
         //System.out.println( A );
-        System.out.println( B.solve( ) );
+        System.out.println( C.solve( ) );
         //System.out.println( C );
       }
       catch ( FileNotFoundException e ) {
@@ -42,6 +43,7 @@ public class Maze{
 
     public Maze(String filename) throws FileNotFoundException , IllegalStateException {
       try {
+        steps = 0;
 	      Scanner file = new Scanner(new File(filename));
 	      int lineSize = 0;
         int lineCount = 0;
@@ -144,7 +146,7 @@ public class Maze{
         for ( int j = 0 ; j < width ; j++ ) {
           if ( maze[i][j] == 'S' ) {
             maze[i][j] = '@';
-            return solve ( i , j , 0 );
+            return solve ( i , j , 1 );
           }
         }
       }
@@ -216,15 +218,13 @@ public class Maze{
         for ( int i = 0 ; i < 4 ; i++ ) {
           if ( maze[row + moves[i][0]][col + moves[i][1]] == 'E' ) { // if the branch hits the end then it is valid
           // wait(500);
-            return level * 2;
+            steps = level;
+            return level;
           }
           if ( move ( row + moves[i][0] , col + moves[i][1]) ) { // if move is possible then it moves
             int a = solve ( row + moves[i][0] , col + moves[i][1] , level + 1 );
-            wait(200);
-            System.out.println( level );
-            wait(200);
             if ( a > 0 ) { // if the branch hit E, it returns the amt of moves
-              return level;
+              return steps;
             }
             // if the branch didn't hit E then the branch is undone
             /*
