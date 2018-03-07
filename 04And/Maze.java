@@ -5,6 +5,7 @@ public class Maze{
     private char[][]maze;
     private int length, width;
     private boolean animate;//false by default
+    private static int[][]moves = { {1,0} , {-1,0} , {0,1} , {0,-1} };
 
     /*Constructor loads a maze text file, and sets animate to false by default.
 
@@ -23,12 +24,15 @@ public class Maze{
     */
     public static void main(String[]args) {
       try {
-        Maze A = new Maze ( "data1.dat" );
+        //Maze A = new Maze ( "data1.dat" );
+        System.out.println("\033[2J");
         Maze B = new Maze ( "data2.dat" );
+        B.setAnimate(true);
         Maze C = new Maze ( "data3.dat" );
-        System.out.println( A );
-        System.out.println( B );
-        System.out.println( C );
+        C.setAnimate(true);
+        //System.out.println( A );
+        System.out.println( C.solve( ) );
+        //System.out.println( C );
       }
       catch ( FileNotFoundException e ) {
         System.out.println ( "uh oh");
@@ -77,6 +81,22 @@ public class Maze{
       }
     }
     
+    private boolean move ( int r , int c ) {
+      if ( r >= length || r < 0 || c >= width || c < 0 || maze[r][c] != ' ' ) {
+        return false;
+      }
+      maze[r][c] = '@';
+      return true;
+    }
+
+    private boolean unmove ( int r , int c ) {
+      if ( r >= length || r < 0 || c >= width || c < 0 || maze[r][c] == '#' ) {
+        return false;
+      }
+      maze[r][c] = '.';
+      return true;
+    }
+
     public String toString ( ) {
       String output = "";
       for ( int i = 0 ; i < length ; i++ ) {
@@ -105,7 +125,8 @@ public class Maze{
     public void clearTerminal(){
         //erase terminal, go to top left of screen.
 
-        System.out.println("\033[2J\033[1;1H");
+        // System.out.println("\033[2J\033[1;1H");
+      System.out.println("\033[1;1H");
     }
 
 
@@ -117,7 +138,14 @@ public class Maze{
 
     */
     public int solve(){
-
+      for ( int i = 0 ; i < length ; i++ ) {
+        for ( int j = 0 ; j < width ; j++ ) {
+          if ( maze[i][j] == 'S' ) {
+            maze[i][j] = ' ';
+            return solve ( i , j , 0 );
+          }
+        }
+      }
             //find the location of the S. 
 
 
@@ -127,7 +155,7 @@ public class Maze{
             //and start solving at the location of the s.
 
             //return solve(???,???);
-      return 0;
+      return -1;
     }
 
     /*
@@ -148,17 +176,29 @@ public class Maze{
             Note: This is not required based on the algorithm, it is just nice visually to see.
         All visited spots that are part of the solution are changed to '@'
     */
-    private int solve(int row, int col){ //you can add more parameters since this is private
-	
+    private int solve(int row, int col, int level){ //you can add more parameters since this is private
         //automatic animation! You are welcome.
         if(animate){
             clearTerminal();
             System.out.println(this);
-            wait(20);
+            wait(30);
         }
-
-        //COMPLETE SOLVE
-        return -1; //so it compiles
+        if ( maze[row][col] == 'E' ) {
+          return level;
+        }
+        if ( move ( row , col ) ) {
+          for ( int i = 0 ; i < 4 ; i++ ) {
+            int branch = solve ( row + moves[i][0] , col + moves[i][1] , level + 1 );
+            if ( branch == -1 ) {
+              unmove ( row + moves[i][0] , col + moves[i][1] );
+            }
+            else {
+              return branch;
+            }
+          }
+          unmove ( row , col );
+        }
+        return -1;
     }
 }
 
