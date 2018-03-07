@@ -31,7 +31,7 @@ public class Maze{
         Maze C = new Maze ( "data3.dat" );
         C.setAnimate(true);
         //System.out.println( A );
-        System.out.println( C.solve( ) );
+        System.out.println( B.solve( ) );
         //System.out.println( C );
       }
       catch ( FileNotFoundException e ) {
@@ -82,7 +82,7 @@ public class Maze{
     }
     
     private boolean move ( int r , int c ) {
-      if ( r >= length || r < 0 || c >= width || c < 0 || maze[r][c] != ' ' ) {
+      if ( r >= length || r < 0 || c >= width || c < 0 || ( maze[r][c] != ' ' && maze[r][c] != 'E' ) ) {
         return false;
       }
       maze[r][c] = '@';
@@ -141,7 +141,7 @@ public class Maze{
       for ( int i = 0 ; i < length ; i++ ) {
         for ( int j = 0 ; j < width ; j++ ) {
           if ( maze[i][j] == 'S' ) {
-            maze[i][j] = ' ';
+            maze[i][j] = '@';
             return solve ( i , j , 0 );
           }
         }
@@ -176,6 +176,8 @@ public class Maze{
             Note: This is not required based on the algorithm, it is just nice visually to see.
         All visited spots that are part of the solution are changed to '@'
     */
+
+        /*
     private int solve(int row, int col, int level){ //you can add more parameters since this is private
         //automatic animation! You are welcome.
         if(animate){
@@ -199,6 +201,34 @@ public class Maze{
           unmove ( row , col );
         }
         return -1;
+    }
+    */
+
+    private int solve(int row, int col, int level){ //you can add more parameters since this is private
+        //automatic animation! You are welcome.
+        if(animate){
+            clearTerminal();
+            System.out.println(this);
+            wait(30);
+        }
+        if ( maze[row][col] == 'E' ) { // if the branch hits the end then it is valid
+          // wait(500);
+          return level;
+        }
+        for ( int i = 0 ; i < 4 ; i++ ) {
+          if ( move ( row + moves[i][0] , col + moves[i][1]) ) { // if move is possible then it moves
+            if ( solve ( row + moves[i][0] , col + moves[i][1] , level + 1 ) > 0 ) { // if the branch hit E, it returns the amt of moves
+              return level;
+            }
+            // if the branch didn't hit E then the branch is undone
+            else {
+              unmove ( row + moves[i][0] , col + moves[i][1] );
+            }
+            
+          }
+        }
+        unmove ( row , col ); // reaches this point if the branch hits a dead end -> returns -1
+        return -1; 
     }
 }
 
