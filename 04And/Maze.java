@@ -85,7 +85,9 @@ public class Maze{
       if ( r >= length || r < 0 || c >= width || c < 0 || ( maze[r][c] != ' ' && maze[r][c] != 'E' ) ) {
         return false;
       }
-      maze[r][c] = '@';
+      if ( maze[r][c] != 'E' ) {
+        maze[r][c] = '@';
+      }
       return true;
     }
 
@@ -211,19 +213,24 @@ public class Maze{
             System.out.println(this);
             wait(30);
         }
-        if ( maze[row][col] == 'E' ) { // if the branch hits the end then it is valid
-          // wait(500);
-          return level;
-        }
         for ( int i = 0 ; i < 4 ; i++ ) {
+          if ( maze[row + moves[i][0]][col + moves[i][1]] == 'E' ) { // if the branch hits the end then it is valid
+          // wait(500);
+            return level * 2;
+          }
           if ( move ( row + moves[i][0] , col + moves[i][1]) ) { // if move is possible then it moves
-            if ( solve ( row + moves[i][0] , col + moves[i][1] , level + 1 ) > 0 ) { // if the branch hit E, it returns the amt of moves
+            int a = solve ( row + moves[i][0] , col + moves[i][1] , level + 1 );
+            wait(200);
+            System.out.println( level );
+            wait(200);
+            if ( a > 0 ) { // if the branch hit E, it returns the amt of moves
               return level;
             }
             // if the branch didn't hit E then the branch is undone
+            /*
             else {
-              unmove ( row + moves[i][0] , col + moves[i][1] );
-            }
+              unmove ( row + moves[i][0] , col + moves[i][1] ); //pretty much no difference without this
+            }*/
             
           }
         }
