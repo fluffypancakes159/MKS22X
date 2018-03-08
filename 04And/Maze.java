@@ -146,7 +146,7 @@ public class Maze{
         for ( int j = 0 ; j < width ; j++ ) {
           if ( maze[i][j] == 'S' ) {
             maze[i][j] = '@';
-            return solve ( i , j , 1 );
+            return solve ( i , j , 0 );
           }
         }
       }
