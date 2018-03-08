@@ -18,10 +18,12 @@ public class USACO {
 			int width = bronzeIn.nextInt( );
 			int elevation = bronzeIn.nextInt( );
 			int numInstructions = bronzeIn.nextInt( );
+			/*
 			System.out.println ( length );
 			System.out.println ( width );
 			System.out.println ( elevation );
 			System.out.println ( numInstructions );
+			*/
 			int[][]lake = new int[length][width];
 			int[][]instructions = new int[numInstructions][3];
 			for ( int i = 0 ; i < length ; i++ ) {
@@ -107,7 +109,26 @@ public class USACO {
 	}
 
 	public static int silver ( String filename ) {
-		return 0;
+	    Scanner silverIn = new Scanner ( new File ( "ctravel.in" ) );
+	    int length = silverIn.nextInt( );
+	    int width = silverIn.nextInt( );
+	    int moves = silverIn.nextInt( );
+	    char[][]map = new int[length][width];
+	    String currentRow; 
+	    for ( int i = 0 ; i < length ; i++ ) {
+		currentRow = silverIn.nextLine( ); 
+		for ( int j = 0 ; j < width ; j++ ) {
+		    map[i][j] = currentRow.charAt(j);
+		}
+	    }
+	    int r1 = silverIn.nextInt( ) - 1;
+	    int c1 = silverIn.nextInt( ) - 1;
+	    int r2 = silverIn.nextInt( ) - 1;
+	    int c2 = silverIn.nextInt( ) - 1;
+	    int[][] currentMoves = new int[length][width];
+	    currentMoves[r1][c1] = 1;
+	    int[][] nextMoves = new int[length][width];
+	    sumAdj ( 
 	}	
 
 
