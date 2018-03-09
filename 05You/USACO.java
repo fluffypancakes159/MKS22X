@@ -157,24 +157,16 @@ public class USACO {
 			for ( int j = 0 ; j < out[0].length ; j++ ) {
 				if ( map[i][j] != '*' ) {
 					if ( i > 0 ) {
-						if ( map[i-1][j] != '*' ) {
-							out[i][j] += in[i-1][j];
-						}
+					    out[i][j] += in[i-1][j];
 					}
 					if ( i < in.length - 1 ) {
-						if ( map[i+1][j] != '*' ) {
-							out[i][j] += in[i+1][j];
-						}
+					    out[i][j] += in[i+1][j];
 					}
 					if ( j > 0 ) {
-						if ( map[i][j-1] != '*' ) {
-							out[i][j] += in[i][j-1];
-						}
+					    out[i][j] += in[i][j-1];
 					}
 					if ( j < in[0].length - 1 ) {
-						if ( map[i][j+1] != '*' ) {
-							out[i][j] += in[i][j+1];
-						}
+					    out[i][j] += in[i][j+1];	
 					}
 				}
 			}
