@@ -4,7 +4,8 @@ public class USACO {
 
 	public static void main(String[] args) {
 		try {
-			System.out.println( USACO.bronze( "makelake.in" ) );
+			// System.out.println( USACO.bronze( "makelake.in" ) );
+			System.out.println( USACO.silver( "ctravel.in" ) );
 		}
 		catch ( FileNotFoundException e ) {
 			System.out.println ( "no file found :(" );
@@ -108,28 +109,77 @@ public class USACO {
 		System.out.println( output );
 	}
 
-	public static int silver ( String filename ) {
-	    Scanner silverIn = new Scanner ( new File ( "ctravel.in" ) );
-	    int length = silverIn.nextInt( );
-	    int width = silverIn.nextInt( );
-	    int moves = silverIn.nextInt( );
-	    char[][]map = new int[length][width];
-	    String currentRow; 
-	    for ( int i = 0 ; i < length ; i++ ) {
-		currentRow = silverIn.nextLine( ); 
-		for ( int j = 0 ; j < width ; j++ ) {
-		    map[i][j] = currentRow.charAt(j);
+	public static int silver ( String filename ) throws FileNotFoundException {
+		try {
+	    	Scanner silverIn = new Scanner ( new File ( "ctravel.in" ) );
+	    	int length = silverIn.nextInt( );
+		    int width = silverIn.nextInt( );
+		    int moves = silverIn.nextInt( );
+		    /*
+		    System.out.println ( length );
+			System.out.println ( width );
+			System.out.println ( moves );
+			*/
+	    	char[][]map = new char[length][width];
+	    	String currentRow; 
+	    	for ( int i = 0 ; i < length ; i++ ) {
+				currentRow = silverIn.next( ); 
+				System.out.println( currentRow );
+				for ( int j = 0 ; j < width ; j++ ) {
+			   		map[i][j] = currentRow.charAt(j);
+				}
+	   		}
+	    	int r1 = silverIn.nextInt( ) - 1;
+		    int c1 = silverIn.nextInt( ) - 1;
+		    int r2 = silverIn.nextInt( ) - 1;
+		    int c2 = silverIn.nextInt( ) - 1;
+		    int[][] currentMoves = new int[length][width];
+		    // currentMoves[r1][c1] = 1;
+		    int[][] nextMoves = new int[length][width];
+		    nextMoves[r1][c1] = 1;
+		    return silverSolve( map , currentMoves , nextMoves , moves )[r2][c2];
 		}
-	    }
-	    int r1 = silverIn.nextInt( ) - 1;
-	    int c1 = silverIn.nextInt( ) - 1;
-	    int r2 = silverIn.nextInt( ) - 1;
-	    int c2 = silverIn.nextInt( ) - 1;
-	    int[][] currentMoves = new int[length][width];
-	    currentMoves[r1][c1] = 1;
-	    int[][] nextMoves = new int[length][width];
-	    sumAdj ( 
+		catch ( FileNotFoundException e ) {
+			throw new FileNotFoundException ( "no file found :(" );
+		}
 	}	
 
+	public static int[][] silverSolve ( char[][]map , int[][]current , int[][]next , int moves ) {
+		if ( moves == 0 ) {
+			return next;
+		}
+		printArray( next );
+		return silverSolve ( map , next , sumAdj ( current , next , map ) , moves - 1 );
+	}	
+
+	public static int[][] sumAdj ( int[][] out , int[][] in , char[][]map ) {
+		for ( int i = 0 ; i < out.length ; i++ ) {
+			for ( int j = 0 ; j < out[0].length ; j++ ) {
+				if ( map[i][j] != '*' ) {
+					if ( i > 0 ) {
+						if ( map[i-1][j] != '*' ) {
+							out[i][j] += in[i-1][j];
+						}
+					}
+					if ( i < in.length - 1 ) {
+						if ( map[i+1][j] != '*' ) {
+							out[i][j] += in[i+1][j];
+						}
+					}
+					if ( j > 0 ) {
+						if ( map[i][j-1] != '*' ) {
+							out[i][j] += in[i][j-1];
+						}
+					}
+					if ( j < in[0].length - 1 ) {
+						if ( map[i][j+1] != '*' ) {
+							out[i][j] += in[i][j+1];
+						}
+					}
+				}
+			}
+		}
+		return out;
+	}
 
 }
