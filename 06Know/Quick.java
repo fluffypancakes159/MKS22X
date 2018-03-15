@@ -3,8 +3,12 @@ public class Quick {
 	public static void main(String[] args) {
 		int[] A = {13,8,4,19,-1,1,3,5,6,17};
 		int[] B = {99,99,99,0,0,0,0,99,99,99};
+		int[] C = new int[20];
+		/*
+		for ( int i = 0 ; i < 20 ; i++ ) {
+			C[i] = (int)(Math.random( ) * 100);
+		}*/
 		// partition ( A , 0 , A.length - 1);
-		System.out.println ( arrayStr( A ) );
 		/* 
 		System.out.println ( quickselect ( A , 0 ) );
 		System.out.println ( quickselect ( A , 1 ) );
@@ -17,8 +21,16 @@ public class Quick {
 		System.out.println ( quickselect ( A , 8 ) );
 		System.out.println ( quickselect ( A , 9 ) );
 		*/
+		
+		System.out.println ( arrayStr( A ) );
 		quickSort( A );
 		System.out.println ( arrayStr( A ) );
+		
+		/*
+		System.out.println ( arrayStr( C ) );
+		quickSort( C );
+		System.out.println ( arrayStr( C ) );
+		*/
 	}
 
 	// helpers 
@@ -94,8 +106,8 @@ public class Quick {
 
 	public static void sortHelp ( int[]data , int start , int end ) {
 		// System.out.println ( arrayStr ( data ) );
-		if ( start + 1 >= end ) {
-			return;
+		if ( start >= end ) {
+			// return;
 		}
 		else {
 			int divider = partition ( data , start , end );
