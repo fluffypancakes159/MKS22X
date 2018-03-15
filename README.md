@@ -5,3 +5,9 @@
 ## 02: NQueens
 
 ## 03: Knight's Tour
+
+## 04: Maze
+ 
+## 05: USACO
+
+## 06: Quicksort
