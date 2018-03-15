@@ -1,9 +1,11 @@
 public class Quick {
 	
 	public static void main(String[] args) {
-		int[] A = {13,8,4,19,4,-1,1,3,5,6,17};
-		partition ( A , 0 , A.length - 1);
+		int[] A = {13,8,4,19,-1,1,3,5,6,17};
+		int[] B = {99,99,99,0,0,0,0,99,99,99};
+		// partition ( A , 0 , A.length - 1);
 		System.out.println ( arrayStr( A ) );
+		/* 
 		System.out.println ( quickselect ( A , 0 ) );
 		System.out.println ( quickselect ( A , 1 ) );
 		System.out.println ( quickselect ( A , 2 ) );
@@ -14,7 +16,9 @@ public class Quick {
 		System.out.println ( quickselect ( A , 7 ) );
 		System.out.println ( quickselect ( A , 8 ) );
 		System.out.println ( quickselect ( A , 9 ) );
-		System.out.println ( quickselect ( A , 10 ) );
+		*/
+		quickSort( A );
+		System.out.println ( arrayStr( A ) );
 	}
 
 	// helpers 
@@ -37,22 +41,24 @@ public class Quick {
 	// non-helpers
 
 	public static int partition ( int[]data , int start , int end ) {
-		int pivotIndex = (int)(Math.random( ) * data.length);
+		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
+		// System.out.println ( pivotIndex );
 		int low = start;
 		int high = end;
-		swap ( data , 0 , pivotIndex );
+		swap ( data , low , pivotIndex );
 		int lowerBound = low + 1;
 		int upperBound = high;
 		while ( lowerBound <= upperBound ) {
-			if ( data[lowerBound] > data[0] ) {
+			if ( data[lowerBound] > data[low] ) {
 				swap ( data , lowerBound , upperBound );
 				upperBound--;
 			}
 			else {
 				lowerBound++;
 			}
+			// System.out.println ( arrayStr ( data ) );
 		}
-		swap( data , 0 , upperBound );
+		swap( data , low , upperBound );
 		return upperBound;
 	}
 
@@ -68,6 +74,34 @@ public class Quick {
 			}
 		}
 		return data[divider];
+	}
+
+	public static void quickSort ( int[]data ) {
+		sortHelp ( data , 0 , data.length - 1);
+		/*
+		int divider = partition ( data , 0 , data.length - 1 );
+		System.out.println ( divider );
+		System.out.println ( arrayStr ( data ) );
+		
+		System.out.println ( "------------------------" );
+		System.out.println ( partition ( data , 0 , divider) );
+		System.out.println ( arrayStr ( data ) );
+		System.out.println ( "------------------------" );
+		System.out.println ( partition ( data , divider , data.length - 1 ) );
+		System.out.println ( arrayStr ( data ) );
+		*/
+	}
+
+	public static void sortHelp ( int[]data , int start , int end ) {
+		// System.out.println ( arrayStr ( data ) );
+		if ( start + 1 >= end ) {
+			return;
+		}
+		else {
+			int divider = partition ( data , start , end );
+			sortHelp ( data , start , divider );
+			sortHelp ( data , divider , end);
+		}
 	}
 
 }
