@@ -1,14 +1,17 @@
 public class Quick {
 	
 	public static void main(String[] args) {
-		int[] A = {13,8,4,19,-1,1,3,5,6,17};
-		int[] B = {99,99,99,0,0,0,0,99,99,99};
+		int[] A = {13,8,4,19,1,1,3,5,5,17};
+		int[] B = {99,99,99,0,0,0,0,9,9,9};
 		int[] C = new int[20];
-		/*
+		
 		for ( int i = 0 ; i < 20 ; i++ ) {
 			C[i] = (int)(Math.random( ) * 100);
-		}*/
-		// partition ( A , 0 , A.length - 1);
+		}
+		
+		System.out.println ( arrayStr ( C ) );
+		partition ( C , 0 , C.length - 1);
+		System.out.println ( arrayStr( C ) );
 		/* 
 		System.out.println ( quickselect ( A , 0 ) );
 		System.out.println ( quickselect ( A , 1 ) );
@@ -21,11 +24,6 @@ public class Quick {
 		System.out.println ( quickselect ( A , 8 ) );
 		System.out.println ( quickselect ( A , 9 ) );
 		*/
-		
-		System.out.println ( arrayStr( A ) );
-		quickSort( A );
-		System.out.println ( arrayStr( A ) );
-		
 		/*
 		System.out.println ( arrayStr( C ) );
 		quickSort( C );
@@ -52,6 +50,7 @@ public class Quick {
 
 	// non-helpers
 
+	/*
 	public static int partition ( int[]data , int start , int end ) {
 		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
 		// System.out.println ( pivotIndex );
@@ -71,6 +70,35 @@ public class Quick {
 			// System.out.println ( arrayStr ( data ) );
 		}
 		swap( data , low , upperBound );
+		return upperBound;
+	}
+	*/
+
+	public static int partition ( int[]data , int start , int end ) {
+		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
+		// System.out.println ( pivotIndex );
+		int low = start;
+		int high = end;
+		swap ( data , low , pivotIndex );
+		int lowerBound = low + 1;
+		int current = lowerBound;
+		int upperBound = high;
+		while ( current <= upperBound ) {
+			if ( data[current] > data[low] ) {
+				swap ( data , current , upperBound );
+				upperBound--;
+			}
+			else if ( data[current] == data[low] ) {
+				current++;
+			}
+			else {
+				swap ( data , lowerBound , current );
+				lowerBound++;
+				current++;
+			}
+			// System.out.println ( arrayStr ( data ) );
+		}
+		swap( data , low , lowerBound - 1 );
 		return upperBound;
 	}
 
@@ -106,13 +134,13 @@ public class Quick {
 
 	public static void sortHelp ( int[]data , int start , int end ) {
 		// System.out.println ( arrayStr ( data ) );
-		if ( start >= end ) {
+		if ( start + 1 >= end ) {
 			// return;
 		}
 		else {
 			int divider = partition ( data , start , end );
 			sortHelp ( data , start , divider );
-			sortHelp ( data , divider , end);
+			sortHelp ( data , divider + 1 , end);
 		}
 	}
 
