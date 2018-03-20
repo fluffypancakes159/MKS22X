@@ -12,14 +12,12 @@ public class Quick {
 		System.out.println ( arrayStr ( C ) );
 		partition ( C , 0 , C.length - 1);
 		System.out.println ( arrayStr( C ) );
-		
 		*/
 		
 		System.out.println ( arrayStr( C ) );
 		quickSort( C );
 		System.out.println ( arrayStr( C ) );
 		
-
 		/*
 		System.out.println ( arrayStr( B ) );
 		quickSort ( B  );
@@ -45,30 +43,6 @@ public class Quick {
 	}
 
 	// non-helpers
-
-	/*
-	public static int partition ( int[]data , int start , int end ) {
-		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
-		// System.out.println ( pivotIndex );
-		int low = start;
-		int high = end;
-		swap ( data , low , pivotIndex );
-		int lowerBound = low + 1;
-		int upperBound = high;
-		while ( lowerBound <= upperBound ) {
-			if ( data[lowerBound] > data[low] ) {
-				swap ( data , lowerBound , upperBound );
-				upperBound--;
-			}
-			else {
-				lowerBound++;
-			}
-			// System.out.println ( arrayStr ( data ) );
-		}
-		swap( data , low , upperBound );
-		return upperBound;
-	}
-	*/
 
 	public static int partition ( int[]data , int start , int end ) {
 		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
@@ -116,18 +90,6 @@ public class Quick {
 
 	public static void quickSort ( int[]data ) {
 		sortHelp ( data , 0 , data.length - 1);
-		/*
-		int divider = partition ( data , 0 , data.length - 1 );
-		System.out.println ( divider );
-		System.out.println ( arrayStr ( data ) );
-		
-		System.out.println ( "------------------------" );
-		System.out.println ( partition ( data , 0 , divider) );
-		System.out.println ( arrayStr ( data ) );
-		System.out.println ( "------------------------" );
-		System.out.println ( partition ( data , divider , data.length - 1 ) );
-		System.out.println ( arrayStr ( data ) );
-		*/
 	}
 
 	public static void sortHelp ( int[]data , int start , int end ) {
