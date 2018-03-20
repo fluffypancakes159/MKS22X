@@ -46,7 +46,7 @@ public class Quick {
 
 	public static int partition ( int[]data , int start , int end ) {
 		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
-		System.out.println ( "Pivot number: " + data[pivotIndex] + "\n" );
+		// System.out.println ( "Pivot number: " + data[pivotIndex] + "\n" );
 		int low = start;
 		int high = end;
 		swap ( data , low , pivotIndex );
@@ -54,7 +54,7 @@ public class Quick {
 		int current = lowerBound + 1;
 		int upperBound = high;
 		while ( current <= upperBound ) {
-			System.out.println ( arrayStr ( data ) + "\nlowerBound: " + lowerBound + "\ncurrent: " + current + "\nupperBound: " + upperBound + "\n"  );
+			// System.out.println ( arrayStr ( data ) + "\nlowerBound: " + lowerBound + "\ncurrent: " + current + "\nupperBound: " + upperBound + "\n"  );
 			if ( data[current] > data[lowerBound] ) {
 				swap ( data , current , upperBound );
 				upperBound--;
@@ -67,15 +67,12 @@ public class Quick {
 				lowerBound++;
 				current++;
 			}
-			// System.out.println ( arrayStr ( data ) );
 		}
-		// swap( data , low , lowerBound - 1 );
 		// System.out.println ( arrayStr ( data ) );
 		return lowerBound;
 	}
 
 	public static int quickselect ( int[]data , int k ) {
-		// boolean notPartitioned = true;
 		int divider = partition ( data , 0 , data.length - 1 ); // first divide 
 		while ( divider != k ) {
 			if ( divider < k ) {
@@ -93,12 +90,9 @@ public class Quick {
 	}
 
 	public static void sortHelp ( int[]data , int start , int end ) {
-		// System.out.println ( arrayStr ( data ) );
 		if ( start >= end ) {
-			// return;
 		}
 		else {
-			// System.out.println ( arrayStr ( data ) );
 			int divider = partition ( data , start , end );
 			System.out.println( "" + "Start: " + start + "\nEnd: " + end + "\nDivider: " + divider );
 			sortHelp ( data , start , divider );
