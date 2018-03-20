@@ -10,4 +10,6 @@
  
 ## 05: USACO
 
-## 06: Quicksort
+## 06: Quick Sort
+
+## 07: Merge Sort
