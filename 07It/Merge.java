@@ -21,13 +21,15 @@ public class Merge {
 	}
 
 	public static void mergeHelp ( int[]data , int[]temp , int lo , int hi ) {
+		int mid = (lo + hi) / 2;
+		System.out.println( "" + lo + " / " + mid + " / " + hi );
+		//System.out.println( arrayStr ( temp ) );
 		if ( lo >= hi ) {
 			return;
 		}
 		for ( int i = lo ; i <= hi ; i++ ) {
 			temp[i] = data[i];
 		}
-		int mid = lo / 2 + hi / 2;
 		mergeHelp ( temp , data , lo , mid );
 		mergeHelp ( temp , data , mid + 1 , hi );
 		merge ( data , temp , lo , mid , hi );
@@ -38,15 +40,18 @@ public class Merge {
 		int i = lo;
 		int j = mid;
 		while ( i < mid && j < hi ) {
-			if ( temp[i] <= temp[j] ) {
-				data[current] = temp[i];
+			if ( data[i] <= data[j] ) {
+				//System.out.println(temp[i]);
+				temp[current] = data[i];
 				i++;
 			}
 			else {
-				data[current] = temp[j];
+				//System.out.println(temp[j]);
+				temp[current] = data[j];
 				j++;
 			}
 			current++;
+			System.out.println( arrayStr(data));
 		}
 	}
 
