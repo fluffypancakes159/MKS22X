@@ -3,10 +3,10 @@ public class Quick {
 	public static void main(String[] args) {
 		int[] A = {13,8,4,19,1,1,3,5,5,17};
 		int[] B = {99,99,99,0,0,0,0,9,9,9};
-		int[] C = new int[20];
+		int[] C = new int[10000];
 		
-		for ( int i = 0 ; i < 20 ; i++ ) {
-			C[i] = (int)(Math.random( ) * 100);
+		for ( int i = 0 ; i < 10000 ; i++ ) {
+			C[i] = (int)(Math.random( ) * 7) - 3 ;
 		}
 		/*
 		System.out.println ( arrayStr ( C ) );
@@ -94,7 +94,7 @@ public class Quick {
 		}
 		else {
 			int divider = partition ( data , start , end );
-			System.out.println( "" + "Start: " + start + "\nEnd: " + end + "\nDivider: " + divider );
+			// System.out.println( "" + "Start: " + start + "\nEnd: " + end + "\nDivider: " + divider );
 			sortHelp ( data , start , divider );
 			sortHelp ( data , divider + 1 , end);
 		}
