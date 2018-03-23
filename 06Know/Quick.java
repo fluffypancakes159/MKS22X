@@ -6,7 +6,7 @@ public class Quick {
 		int[] C = new int[10000];
 		
 		for ( int i = 0 ; i < 10000 ; i++ ) {
-			C[i] = (int)(Math.random( ) * 7) - 3 ;
+			C[i] = (int)(Math.random( ) * 100);
 		}
 		/*
 		System.out.println ( arrayStr ( C ) );
@@ -14,9 +14,9 @@ public class Quick {
 		System.out.println ( arrayStr( C ) );
 		*/
 		
-		System.out.println ( arrayStr( C ) );
+		//System.out.println ( arrayStr( C ) );
 		quickSort( C );
-		System.out.println ( arrayStr( C ) );
+		System.out.println ( isSorted( C ) );
 		
 		/*
 		System.out.println ( arrayStr( B ) );
@@ -26,6 +26,35 @@ public class Quick {
 	}
 
 	// helpers 
+
+	public static boolean isSorted ( int[]ary ) {
+		for ( int i = 0 ; i < ary.length - 1 ; i++ ) {
+			if ( ary[i] > ary[i+1] ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void insertion ( int[]data , int lo , int hi ) {
+		int current = lo + 1;
+		while ( current <= hi ) {
+			for ( int i = lo ; i <= hi ; i++ ) {
+				if ( data[i] > data[current] ) {
+					move ( data , current , i );
+				}
+			}
+			current++;
+			// System.out.println ( arrayStr (data) );
+		}
+	}
+
+	public static void move ( int[]data , int start , int end ) {
+		int current = start;
+		for ( int i = start ; i > end ; i-- ) {
+			swap ( data , i , i - 1 );
+		}
+	}
 
 	public static void swap ( int[]ary , int index1 , int index2 ) {
 		int swap = ary[index1];
@@ -90,7 +119,9 @@ public class Quick {
 	}
 
 	public static void sortHelp ( int[]data , int start , int end ) {
-		if ( start >= end ) {
+		if ( start + 5 >= end ) {
+			insertion ( data , start , end );
+			return;
 		}
 		else {
 			int divider = partition ( data , start , end );
@@ -99,5 +130,7 @@ public class Quick {
 			sortHelp ( data , divider + 1 , end);
 		}
 	}
+
+
 
 }
