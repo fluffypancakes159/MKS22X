@@ -11,6 +11,7 @@ public class Merge {
 		
 		// System.out.println ( arrayStr ( C ) );
 		mergeSort ( C );
+		// insertion ( C , 0 , C.length - 1);
 		System.out.println ( isSorted (  C  ) );
 		
 	}
@@ -42,7 +43,8 @@ public class Merge {
 		int mid = (lo + hi) / 2;
 		// System.out.println( "" + lo + " / " + mid + " / " + hi );
 		//System.out.println( arrayStr ( temp ) );
-		if ( lo >= hi ) {
+		if ( lo + 3 >= hi ) {
+			insertion ( data , lo , hi );
 			return;
 		}
 		for ( int i = lo ; i <= hi ; i++ ) {
@@ -87,6 +89,32 @@ public class Merge {
 			}
 		}
 		// System.out.println ( arrayStr( data ));
+	}
+
+	public static void insertion ( int[]data , int lo , int hi ) {
+		int current = lo + 1;
+		while ( current <= hi ) {
+			for ( int i = lo ; i <= hi ; i++ ) {
+				if ( data[i] > data[current] ) {
+					move ( data , current , i );
+				}
+			}
+			current++;
+			System.out.println ( arrayStr (data) );
+		}
+	}
+
+	public static void move ( int[]data , int start , int end ) {
+		int current = start;
+		for ( int i = start ; i > end ; i-- ) {
+			swap ( data , i , i - 1 );
+		}
+	}
+
+	public static void swap ( int[]ary , int index1 , int index2 ) {
+		int swap = ary[index1];
+		ary[index1] = ary[index2];
+		ary[index2] = swap;
 	}
 
 }
