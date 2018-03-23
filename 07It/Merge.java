@@ -1,9 +1,27 @@
 public class Merge {
 	
 	public static void main(String[] args) {
-		int[] A = {3, 5, 6, 12, 12, 5, 6, 56, 7};
-		mergeSort ( A );
-		System.out.println ( arrayStr ( A ) );
+		int[] A = {5, 3, 10, 12, 56, 6, 7, 34};
+		int[] B = new int[8];
+		int[] C = new int[100];
+		for ( int i = 0 ; i < C.length ; i++ ) {
+			C[i] = (int)(Math.random( ) * 100);
+		}
+		// merge ( B , A , 0 , 1 , 1 );
+		
+		// System.out.println ( arrayStr ( C ) );
+		mergeSort ( C );
+		System.out.println ( isSorted (  C  ) );
+		
+	}
+
+	public static boolean isSorted ( int[]ary ) {
+		for ( int i = 0 ; i < ary.length - 1 ; i++ ) {
+			if ( ary[i] > ary[i+1] ) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public static String arrayStr ( int[]ary ) {
@@ -22,7 +40,7 @@ public class Merge {
 
 	public static void mergeHelp ( int[]data , int[]temp , int lo , int hi ) {
 		int mid = (lo + hi) / 2;
-		System.out.println( "" + lo + " / " + mid + " / " + hi );
+		// System.out.println( "" + lo + " / " + mid + " / " + hi );
 		//System.out.println( arrayStr ( temp ) );
 		if ( lo >= hi ) {
 			return;
@@ -32,27 +50,43 @@ public class Merge {
 		}
 		mergeHelp ( temp , data , lo , mid );
 		mergeHelp ( temp , data , mid + 1 , hi );
-		merge ( data , temp , lo , mid , hi );
+		merge ( data , temp , lo , mid + 1 , hi );
 	}
 
 	public static void merge ( int[]data , int[]temp , int lo , int mid , int hi ) {
 		int current = lo;
-		int i = lo;
-		int j = mid;
-		while ( i < mid && j < hi ) {
-			if ( data[i] <= data[j] ) {
+		int left = lo;
+		int right = mid;
+		while ( left < mid  && right <= hi ) {
+			// System.out.println( "temp[left]: " + temp[left] + "\ntemp[right]: " + temp[right] );
+			if ( temp[left] <= temp[right] ) {
 				//System.out.println(temp[i]);
-				temp[current] = data[i];
-				i++;
+				data[current] = temp[left];
+				left++;
 			}
 			else {
 				//System.out.println(temp[j]);
-				temp[current] = data[j];
-				j++;
+				data[current] = temp[right];
+				right++;
 			}
 			current++;
-			System.out.println( arrayStr(data));
+			// System.out.println ( arrayStr ( data ));
+			// System.out.println( arrayStr(temp));
 		}
+		if ( left < mid ) {
+			for ( int n = left ; n < mid ; n++ ) {
+				data[current] = temp[n];
+				current++;
+			}
+		}
+		if ( right <= hi) {
+			// System.out.println ( "hello ");
+			for ( int n = right ; n <= hi ; n++ ) {
+				data[current] = temp[n];
+				current++;
+			}
+		}
+		// System.out.println ( arrayStr( data ));
 	}
 
 }
