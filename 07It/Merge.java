@@ -106,15 +106,11 @@ public class Merge {
 
 	public static void move ( int[]data , int start , int end ) {
 		int current = start;
+		int value = data[start];
 		for ( int i = start ; i > end ; i-- ) {
-			swap ( data , i , i - 1 );
+			data[i] = data[i-1];
 		}
-	}
-
-	public static void swap ( int[]ary , int index1 , int index2 ) {
-		int swap = ary[index1];
-		ary[index1] = ary[index2];
-		ary[index2] = swap;
+		data[end] = value;
 	}
 
 }

@@ -51,9 +51,11 @@ public class Quick {
 
 	public static void move ( int[]data , int start , int end ) {
 		int current = start;
+		int value = data[start];
 		for ( int i = start ; i > end ; i-- ) {
-			swap ( data , i , i - 1 );
+			data[i] = data[i-1];
 		}
+		data[end] = value;
 	}
 
 	public static void swap ( int[]ary , int index1 , int index2 ) {
