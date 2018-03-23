@@ -100,7 +100,7 @@ public class Merge {
 				}
 			}
 			current++;
-			System.out.println ( arrayStr (data) );
+			// System.out.println ( arrayStr (data) );
 		}
 	}
 
