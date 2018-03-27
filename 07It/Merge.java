@@ -10,7 +10,7 @@ public class Merge {
 		// merge ( B , A , 0 , 1 , 1 );
 		
 		// System.out.println ( arrayStr ( C ) );
-		mergeSort ( C );
+		mergesort ( C );
 		System.out.println ( isSorted (  C  ) );
 		
 	}
@@ -33,7 +33,7 @@ public class Merge {
 		return output;
 	}
 
-	public static void mergeSort ( int[]data ) {
+	public static void mergesort ( int[]data ) {
 		int[]temp = new int[data.length];
 		mergeHelp ( data , temp , 0 , data.length - 1 );
 	}
