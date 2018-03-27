@@ -42,7 +42,8 @@ public class Merge {
 		int mid = (lo + hi) / 2;
 		// System.out.println( "" + lo + " / " + mid + " / " + hi );
 		//System.out.println( arrayStr ( temp ) );
-		if ( lo >= hi ) {
+		if ( lo + 3 >= hi ) {
+			insertion ( data , lo , hi );
 			return;
 		}
 		for ( int i = lo ; i <= hi ; i++ ) {
@@ -87,6 +88,28 @@ public class Merge {
 			}
 		}
 		// System.out.println ( arrayStr( data ));
+	}
+
+	public static void insertion ( int[]data , int lo , int hi ) {
+		int current = lo + 1;
+		while ( current <= hi ) {
+			for ( int i = lo ; i <= hi ; i++ ) {
+				if ( data[i] > data[current] ) {
+					move ( data , current , i );
+				}
+			}
+			current++;
+			// System.out.println ( arrayStr (data) );
+		}
+	}
+
+	public static void move ( int[]data , int start , int end ) {
+		int current = start;
+		int value = data[start];
+		for ( int i = start ; i > end ; i-- ) {
+			data[i] = data[i-1];
+		}
+		data[end] = value;
 	}
 
 }

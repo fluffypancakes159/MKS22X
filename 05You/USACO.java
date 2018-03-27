@@ -30,7 +30,7 @@ public class USACO {
 			for ( int i = 0 ; i < length ; i++ ) {
 				for ( int j = 0 ; j < width ; j++ ) {
 					lake[i][j] = bronzeIn.nextInt( );
-					printArray ( lake );
+					// printArray ( lake );
 				}
 			}
 			for ( int i = 0 ; i < numInstructions ; i++ ) {
@@ -45,10 +45,10 @@ public class USACO {
 			}
 			bronzeIn.close( );
 			for ( int i = 0 ; i < numInstructions ; i++ ) {
-				printArray ( lake );
+				// printArray ( lake );
 				executeBronze ( lake , instructions[i] );
 			}
-			printArray ( lake );
+			// printArray ( lake );
 			return calcVolume ( lake , elevation );
 		}
 		catch ( FileNotFoundException e ) {
@@ -124,7 +124,7 @@ public class USACO {
 	    	String currentRow; 
 	    	for ( int i = 0 ; i < length ; i++ ) {
 				currentRow = silverIn.next( ); 
-				System.out.println( currentRow );
+				// System.out.println( currentRow );
 				for ( int j = 0 ; j < width ; j++ ) {
 			   		map[i][j] = currentRow.charAt(j);
 				}
@@ -148,7 +148,7 @@ public class USACO {
 		if ( moves == 0 ) {
 			return next;
 		}
-		printArray( next );
+		// printArray( next );
 		return silverSolve ( map , next , sumAdj ( current , next , map ) , moves - 1 );
 	}	
 
