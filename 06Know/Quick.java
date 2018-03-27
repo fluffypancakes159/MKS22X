@@ -14,9 +14,9 @@ public class Quick {
 		System.out.println ( arrayStr( C ) );
 		*/
 		
-		System.out.println ( arrayStr( C ) );
-		quickSort( C );
-		System.out.println ( arrayStr( C ) );
+		// System.out.println ( arrayStr( C ) );
+		quicksort( C );
+		// System.out.println ( arrayStr( C ) );
 		
 		/*
 		System.out.println ( arrayStr( B ) );
@@ -85,7 +85,7 @@ public class Quick {
 		return data[divider];
 	}
 
-	public static void quickSort ( int[]data ) {
+	public static void quicksort ( int[]data ) {
 		sortHelp ( data , 0 , data.length - 1);
 	}
 
