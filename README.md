@@ -13,3 +13,5 @@
 ## 06: Quick Sort
 
 ## 07: Merge Sort
+
+## 08: Linked List
