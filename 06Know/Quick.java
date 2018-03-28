@@ -16,7 +16,7 @@ public class Quick {
 		
 		//System.out.println ( arrayStr( C ) );
 		quicksort( C );
-		System.out.println ( isSorted( C ) );
+		// System.out.println ( isSorted( C ) );
 		
 		/*
 		System.out.println ( arrayStr( B ) );
