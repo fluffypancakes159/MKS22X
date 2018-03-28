@@ -6,7 +6,7 @@ public class Quick {
 		int[] C = new int[10000];
 		
 		for ( int i = 0 ; i < 10000 ; i++ ) {
-			C[i] = (int)(Math.random( ) * 100);
+			C[i] = (int)(Math.random( ) * 200000) - 100000;
 		}
 		/*
 		System.out.println ( arrayStr ( C ) );
@@ -16,7 +16,7 @@ public class Quick {
 		
 		//System.out.println ( arrayStr( C ) );
 		quicksort( C );
-		// System.out.println ( isSorted( C ) );
+		System.out.println ( isSorted( C ) );
 		
 		/*
 		System.out.println ( arrayStr( B ) );
@@ -118,6 +118,7 @@ public class Quick {
 
 	public static void quicksort ( int[]data ) {
 		sortHelp ( data , 0 , data.length - 1);
+		// System.out.println ( arrayStr( data ));
 	}
 
 	public static void sortHelp ( int[]data , int start , int end ) {
