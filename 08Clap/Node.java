@@ -2,15 +2,15 @@ private class Node {
 	
 	private Node prev;
 	private Node next;
-	private int data;
+	private Integer data;
 
-	public Node ( int data ) {
+	public Node ( Integer data ) {
 		prev = null;
 		next = null;
 		this.data = data;
 	}
 
-	public Node ( Node prev , Node next , int data) {
+	public Node ( Node prev , Node next , Integer data) {
 		this.prev = prev;
 		this.next = next;
 		this.data = data;
@@ -24,7 +24,7 @@ private class Node {
 		this.next = next;
 	}
 
-	private void setValue ( int value ) {
+	private void setValue ( Integer value ) {
 		data = value;
 	}
 
