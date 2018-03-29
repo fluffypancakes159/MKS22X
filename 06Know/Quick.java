@@ -3,10 +3,11 @@ public class Quick {
 	public static void main(String[] args) {
 		int[] A = {13,8,4,19,1,1,3,5,5,17};
 		int[] B = {99,99,99,0,0,0,0,9,9,9};
-		int[] C = new int[10000];
+		int[] C = new int[1000];
+		int[] D = {1,0 , 2 , -1};
 		
-		for ( int i = 0 ; i < 10000 ; i++ ) {
-			C[i] = (int)(Math.random( ) * 200000) - 100000;
+		for ( int i = 0 ; i < C.length - 1 ; i++ ) {
+			C[i] = (int)(Math.random( ) * 3) - 1;
 		}
 		/*
 		System.out.println ( arrayStr ( C ) );
@@ -14,9 +15,11 @@ public class Quick {
 		System.out.println ( arrayStr( C ) );
 		*/
 		
-		//System.out.println ( arrayStr( C ) );
-		quicksort( C );
-		System.out.println ( isSorted( C ) );
+		System.out.println ( arrayStr( C ) );
+		// quicksort( C );
+		insertion ( C , 0 , D.length - 1 );
+		System.out.println ( arrayStr( C ) );
+		// System.out.println ( isSorted( A ) );
 		
 		/*
 		System.out.println ( arrayStr( B ) );
@@ -39,23 +42,22 @@ public class Quick {
 	public static void insertion ( int[]data , int lo , int hi ) {
 		int current = lo + 1;
 		while ( current <= hi ) {
-			for ( int i = lo ; i <= hi ; i++ ) {
-				if ( data[i] > data[current] ) {
-					move ( data , current , i );
-				}
-			}
+			move ( data , current , lo );
 			current++;
-			// System.out.println ( arrayStr (data) );
 		}
+		// System.out.println ( arrayStr (data) );
 	}
 
-	public static void move ( int[]data , int start , int end ) {
-		int current = start;
-		int value = data[start];
-		for ( int i = start ; i > end ; i-- ) {
-			data[i] = data[i-1];
+	public static void move ( int[]data , int index , int lo ) {
+		int current = index;
+		int value = data[index];
+		while ( current > lo && value <= data[current-1] ) {
+			data[current] = data[current-1];
+			// System.out.println ( arrayStr ( data ) );
+			current--;
 		}
-		data[end] = value;
+		data[current] = value;
+		// System.out.println ( arrayStr ( data ) );
 	}
 
 	public static void swap ( int[]ary , int index1 , int index2 ) {
@@ -66,6 +68,9 @@ public class Quick {
 
 	public static String arrayStr ( int[]ary ) {
 		String output = "[";
+		if ( ary.length == 0 ) {
+			return "[ ]";
+		} 
 		for ( int i = 0 ; i < ary.length - 1; i++ ) {
 			output += ary[i] + " , ";
 		}
@@ -75,7 +80,7 @@ public class Quick {
 
 	// non-helpers
 
-	public static int partition ( int[]data , int start , int end ) {
+	public static int[] partition ( int[]data , int start , int end ) {
 		int pivotIndex = (int)(Math.random( ) * (end - start)) + start;
 		// System.out.println ( "Pivot number: " + data[pivotIndex] + "\n" );
 		int low = start;
@@ -100,20 +105,21 @@ public class Quick {
 			}
 		}
 		// System.out.println ( arrayStr ( data ) );
-		return lowerBound;
+		int[] out = {lowerBound, upperBound};
+		return out;
 	}
 
 	public static int quickselect ( int[]data , int k ) {
-		int divider = partition ( data , 0 , data.length - 1 ); // first divide 
-		while ( divider != k ) {
-			if ( divider < k ) {
-				divider = partition ( data , divider , data.length - 1 );
+		int[] divider = partition ( data , 0 , data.length - 1 ); // first divide 
+		while ( divider[0] != k ) {
+			if ( divider[0] < k ) {
+				divider = partition ( data , divider[0] , data.length - 1 );
 			}
 			else {
-				divider = partition ( data , 0 , divider );
+				divider = partition ( data , 0 , divider[0] );
 			}
 		}
-		return data[divider];
+		return data[divider[0]];
 	}
 
 	public static void quicksort ( int[]data ) {
@@ -122,15 +128,20 @@ public class Quick {
 	}
 
 	public static void sortHelp ( int[]data , int start , int end ) {
-		if ( start + 5 >= end ) {
+		if ( start + 10 >= end ) {
 			insertion ( data , start , end );
 			return;
 		}
+		/*
+		if ( start >= end ) {
+			return;
+		}
+		*/
 		else {
-			int divider = partition ( data , start , end );
+			int[] divider = partition ( data , start , end );
 			// System.out.println( "" + "Start: " + start + "\nEnd: " + end + "\nDivider: " + divider );
-			sortHelp ( data , start , divider );
-			sortHelp ( data , divider + 1 , end);
+			sortHelp ( data , start , divider[0] );
+			sortHelp ( data , divider[1] , end);
 		}
 	}
 
