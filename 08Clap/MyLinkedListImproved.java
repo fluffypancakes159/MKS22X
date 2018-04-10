@@ -144,12 +144,10 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 
 	public int indexOf ( T data ) {
 		int currentIndex = 0;
-		Node current = start;
-		while ( !(current == null) && currentIndex < size ) {
-			if ( data.equals( current.getValue( ) ) ) {
+		for ( T current : this ) {
+			if ( data.equals( current ) ) {
 				return currentIndex;
 			}
-			current = current.getNext( );
 			currentIndex++;
 		}
 		return -1;
@@ -328,9 +326,6 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 			return output.getValue( );
 		}
 
-		public void remove ( ) {
-			// apparently my system has java 7 which doesn't implement remove by default
-		}
 	}
 
 }
