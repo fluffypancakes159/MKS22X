@@ -13,25 +13,19 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 		A.add( 3 );
 		A.add( 4 );
 		A.add( 5 );
-		A.add( 6 );
-		A.add( 7 );
-		A.add( 8 );
-		A.add( 9 );
-		A.add( 10 );
-		A.add( 1 );
-		A.add( 2 );
-		A.add( 3 );
-		A.add( 1 );
-		A.add( 2 );
-		A.add( 3 );
-		A.add( 1 );
-		A.add( 2 );
-		A.add( 3 );
+		MyLinkedListImproved<Integer> B = new MyLinkedListImproved<>( );
+		B.add( 6 );
+		B.add( 7 );
+		B.add( 8 );
+		B.add( 9 );
+		B.add( 10 );
+		A.extend( B );
 		for ( Integer inte : A ) {
 			System.out.println( inte );
 		}
-		System.out.println( A.min( ) );
-		System.out.println( A.max( ) );
+		System.out.println( B );
+		//System.out.println( A.min( ) );
+		//System.out.println( A.max( ) );
 		// A.clear( );
 		/*
 		A.set( 1 , 6 );
@@ -250,6 +244,16 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 			currentIndex++; 
 		}
 		return minIndex;
+	}
+
+	public void extend ( MyLinkedListImproved<T> other ) {
+		if ( other.start == null ) {
+			return;
+		}
+		this.end.setNext( other.start );
+		other.start.setPrev( this.end );
+		this.end = other.end;
+		other.clear( );
 	}
 
 	private class Node {
