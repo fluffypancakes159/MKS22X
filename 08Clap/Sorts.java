@@ -1,20 +1,57 @@
 public class Sorts {
 
 	public static void main(String[] args) {
-		
+		MyLinkedListImproved<Integer> A = new MyLinkedListImproved<>( );
+		A.add( 2 );
+		A.add( 1 );
+		A.add( 5 );
+		A.add( 10 );
+		A.add( 18 );
+		A.add( 4 );
+		A.add( 24 );
+		A.add( 25 );
+		A.add( 7 );
+		A.add( 32 );
+		A.add( 61 );
+		A.add( 15 );
+		A.add( 47 );
+		Sorts.radixSort( A );
+		System.out.println( A );
+		MyLinkedListImproved<Integer> B = new MyLinkedListImproved<>( );
+		MyLinkedListImproved<Integer> C = new MyLinkedListImproved<>( );
+		C.add( 10 );
+		B.extend(C);
+		System.out.println( B );
+	}
+
+	public static String arrayStr ( MyLinkedListImproved[]ary ) {
+		String output = "[";
+		for ( int i = 0 ; i < ary.length - 1; i++ ) {
+			output += ary[i] + " , ";
+		}
+		output += ary[ary.length - 1] + "]";
+		return output;
 	}
 
 	public static void radixSort ( MyLinkedListImproved<Integer> data ) {
-		Integer[] buckets = new Integer[10];
+		@SuppressWarnings("unchecked") MyLinkedListImproved<Integer>[] buckets = new MyLinkedListImproved[10];
 		int digitCount = 0;
 		for ( int i = 0 ; Math.pow( 10 , i ) < data.max( ) ; i++ ) {
 			digitCount = i + 1;
 		}
+		for ( int i = 0 ; i < 10 ; i++ ) {
+			buckets[i] = new MyLinkedListImproved<Integer>( );
+		}
 		for ( int i = 0 ; i < digitCount ; i++ ) {
 			for ( Integer inte : data ) {
-				buckets[(inte / Math.pow( 10 , i)) % 10] = inte;
+				System.out.println(arrayStr(buckets));
+				int place = (int)(inte / Math.pow( 10 , i));
+				buckets[place % 10].add(inte);
 			}
-			
+			data.clear( );
+			for ( int j = 0 ; j < 10 ; j++ ) {
+				data.extend(buckets[i]);
+			}
 		}
 		return;
 	}
