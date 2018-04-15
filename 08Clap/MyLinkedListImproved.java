@@ -210,7 +210,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 		return target.getValue( );
 	}
 
-	public int max ( ) {
+	public int max ( ) { // index of max
 		if ( size == 0 ) {
 			return -1;
 		}
@@ -222,13 +222,14 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 			if ( current.compareTo( maxValue ) > 0 ) {
 				maxValue = current;
 				maxIndex = currentIndex;
+				// System.out.println( maxValue + " current max");
 			}
 			currentIndex++; 
 		}
 		return maxIndex;
 	}
 
-	public int min ( ) {
+	public int min ( ) { // index of min
 		if ( size == 0 ) {
 			return -1;
 		}
@@ -248,8 +249,10 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 
 	public void extend ( MyLinkedListImproved<T> other ) {
 		if ( this.start == null ) {
+			// System.out.println( "im a null boy" );
 			this.start = other.start;
 			this.end = other.end;
+			this.size = other.size;
 			other.clear( );
 			return;
 		}
@@ -259,6 +262,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 		this.end.setNext( other.start );
 		other.start.setPrev( this.end );
 		this.end = other.end;
+		this.size += other.size;
 		other.clear( );
 	}
 

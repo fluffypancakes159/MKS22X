@@ -12,16 +12,21 @@ public class Sorts {
 		A.add( 25 );
 		A.add( 7 );
 		A.add( 32 );
+		A.add( 25 );
+		A.add( 77 );
+		A.add( 1000 );
 		A.add( 61 );
 		A.add( 15 );
 		A.add( 47 );
 		Sorts.radixSort( A );
 		System.out.println( A );
+		/*
 		MyLinkedListImproved<Integer> B = new MyLinkedListImproved<>( );
 		MyLinkedListImproved<Integer> C = new MyLinkedListImproved<>( );
 		C.add( 10 );
 		B.extend(C);
 		System.out.println( B );
+		*/
 	}
 
 	public static String arrayStr ( MyLinkedListImproved[]ary ) {
@@ -35,23 +40,29 @@ public class Sorts {
 
 	public static void radixSort ( MyLinkedListImproved<Integer> data ) {
 		@SuppressWarnings("unchecked") MyLinkedListImproved<Integer>[] buckets = new MyLinkedListImproved[10];
-		int digitCount = 0;
-		for ( int i = 0 ; Math.pow( 10 , i ) < data.max( ) ; i++ ) {
-			digitCount = i + 1;
+		int digitCount = 1;
+		// MyLinkedListImproved<Integer> test = new MyLinkedListImproved<>( );
+		// System.out.println(data);
+		// System.out.println(data.max() + " max");
+		for ( int i = 1 ; Math.pow( 10 , i ) <= data.get(data.max( )) ; i++ ) {
+			digitCount++;
 		}
+		// System.out.println( digitCount );
 		for ( int i = 0 ; i < 10 ; i++ ) {
 			buckets[i] = new MyLinkedListImproved<Integer>( );
 		}
 		for ( int i = 0 ; i < digitCount ; i++ ) {
 			for ( Integer inte : data ) {
-				System.out.println(arrayStr(buckets));
+				// System.out.println(arrayStr(buckets) + " buckets" );
 				int place = (int)(inte / Math.pow( 10 , i));
 				buckets[place % 10].add(inte);
 			}
 			data.clear( );
 			for ( int j = 0 ; j < 10 ; j++ ) {
-				data.extend(buckets[i]);
+				data.extend(buckets[j]);
+				// test.extend(buckets[j]);
 			}
+			// System.out.println(test);
 		}
 		return;
 	}
