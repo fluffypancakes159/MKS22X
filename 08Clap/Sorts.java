@@ -10,15 +10,24 @@ public class Sorts {
 		A.add( 4 );
 		A.add( 24 );
 		A.add( 25 );
-		A.add( -7 );
+		A.add( 7 );
 		A.add( 32 );
-		A.add( -25 );
-		A.add( -77 );
-		A.add( -61 );
+		A.add( 25 );
+		A.add( 77 );
+		A.add( 61 );
 		A.add( 15 );
 		A.add( 47 );
 		// System.out.println( A );
-		Sorts.radixSort( A );
+		Sorts.radixsort( A );
+		System.out.println( A );
+		A.add(-7);
+		A.add(-10);
+		A.add(-23);
+		A.add(-7);
+		A.add(-55);
+		A.add(-84);
+		A.add(-26);
+		Sorts.radixsortIncludingNegatives( A );
 		System.out.println( A );
 		// System.out.println( -15 % 100 );
 		/*
@@ -39,7 +48,37 @@ public class Sorts {
 		return output;
 	}
 
-	public static void radixSort ( MyLinkedListImproved<Integer> data ) {
+	public static void radixsort ( MyLinkedListImproved<Integer> data ) {
+		@SuppressWarnings("unchecked") MyLinkedListImproved<Integer>[] buckets = new MyLinkedListImproved[10];
+		int digitCount = 1;
+		// MyLinkedListImproved<Integer> test = new MyLinkedListImproved<>( );
+		// System.out.println(data);
+		// System.out.println(data.max() + " max");
+		for ( int i = 1 ; Math.pow( 10 , i ) <= data.get(data.max( )) ; i++ ) {
+			digitCount++;
+		}
+		// System.out.println( digitCount );
+		for ( int i = 0 ; i < 10 ; i++ ) {
+			buckets[i] = new MyLinkedListImproved<Integer>( );
+		}
+		for ( int i = 0 ; i < digitCount ; i++ ) {
+			for ( Integer inte : data ) {
+				// System.out.println(arrayStr(buckets) + " buckets" );
+				int place = (int)(inte / Math.pow( 10 , i));
+				// System.out.println ( inte );
+				buckets[place % 10].add(inte);
+			}
+			data.clear( );
+			for ( int j = 0 ; j < 10 ; j++ ) {
+				data.extend(buckets[j]);
+				// test.extend(buckets[j]);
+			}
+			// System.out.println(test);
+		}
+		return;
+	}
+
+	public static void radixsortIncludingNegatives ( MyLinkedListImproved<Integer> data ) {
 		@SuppressWarnings("unchecked") MyLinkedListImproved<Integer>[] buckets = new MyLinkedListImproved[19];
 		int digitCount = 1;
 		// MyLinkedListImproved<Integer> test = new MyLinkedListImproved<>( );
