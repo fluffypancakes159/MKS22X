@@ -4,6 +4,8 @@ public class Postfix {
 		
 	}
 
-	
+	public static double eval ( String exp ) {
+		
+	}
 
 }
