@@ -6,6 +6,7 @@ public class Calculator {
 		System.out.println( eval( "1 2 + 3 +") );
 		System.out.println( eval( "1 2 * 3 +") );
 		System.out.println( eval( "5 2 * 6 + 4 / ") );
+		System.out.println( eval( "5 2 % 6 + 2 / ") );
 	}
 
 	public static double eval ( String exp ) {
