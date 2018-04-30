@@ -21,3 +21,5 @@
 ## 10: Double-Ended Queue
 
 ## 11: Expression Tree
+
+## 12: Heap
