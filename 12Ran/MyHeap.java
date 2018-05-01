@@ -1,8 +1,8 @@
 import java.util.Arrays;
 
-public class MyHeap/*<String>*/ { 
+public class MyHeap<T extends Comparable<T>> { 
 
-	private String[] data;
+	private T[] data;
 	private int size;
 	private boolean max;
 
@@ -50,8 +50,9 @@ public class MyHeap/*<String>*/ {
 		// System.out.println( "c".compareTo( "ba" ) );
 	}
 
+	@SuppressWarnings( "unchecked")
 	public MyHeap ( ) {
-		data = new String[10];
+		data = (T[]) new Comparable[10];
 		size = 0;
 		max = true;
 	}
@@ -61,19 +62,19 @@ public class MyHeap/*<String>*/ {
 		max = false;
 	}
 
-	public String[] getData ( ) {
+	public T[] getData ( ) {
 		return data;
 	}
 
 	private void resize ( ) {
-		String[] newData = new String[size * 2 + 1];
+		T[] newData = (T[])new Comparable[size * 2 + 1];
 		for ( int i = 0 ; i < size ; i++ ) {
 			newData[i] = data[i];
 		}
 		data = newData;
 	}
 
-	public void add ( String s ) {
+	public void add ( T s ) {
 		if ( size == data.length ) {
 			resize( );
 		}
@@ -90,11 +91,11 @@ public class MyHeap/*<String>*/ {
 		// System.out.println( Arrays.toString( data ) );
 	}
 
-	public String remove ( ) {
+	public T remove ( ) {
 		if ( size == 0 ) {
 			return null;
 		}
-		String out = data[0];
+		T out = data[0];
 		swap ( 0 , size - 1 );
 		data[size - 1] = null;
 		size--;
@@ -107,7 +108,7 @@ public class MyHeap/*<String>*/ {
 		return out;
 	}
 
-	public String peek ( ) {
+	public T peek ( ) {
 		return data[0];
 	}
 
@@ -115,15 +116,15 @@ public class MyHeap/*<String>*/ {
 		return size;
 	}
 
-	private String getParent ( int index ) {
+	private T getParent ( int index ) {
 		return data[(index - 1) / 2];
 	}
 
-	private String getLeft ( int index ) {
+	private T getLeft ( int index ) {
 		return data[index * 2 + 1];
 	}
 
-	private String getRight ( int index ) {
+	private T getRight ( int index ) {
 		return data[index * 2 + 2];
 	}
 
@@ -146,7 +147,7 @@ public class MyHeap/*<String>*/ {
 		System.out.println( size );
 		System.out.println( Arrays.toString(data));
 		*/
-		String temp = data[index1];
+		T temp = data[index1];
 		data[index1] = data[index2];
 		data[index2] = temp;
 		// System.out.println( Arrays.toString(data));
@@ -174,8 +175,8 @@ public class MyHeap/*<String>*/ {
 			     getRightIndex ( currentIndex ) < size ) &&
 				( data[currentIndex].compareTo( getLeft( currentIndex ) ) > 0 ||
 			     data[currentIndex].compareTo( getRight( currentIndex ) ) > 0 ) ) {
-			String left = getLeft( currentIndex );
-			String right = getRight( currentIndex );
+			T left = getLeft( currentIndex );
+			T right = getRight( currentIndex );
 			if ( right == null || left.compareTo( right ) <= 0 ) {
 				swap ( currentIndex , getLeftIndex ( currentIndex ) );	
 				currentIndex = getLeftIndex ( currentIndex );
@@ -193,8 +194,8 @@ public class MyHeap/*<String>*/ {
 			     getRightIndex ( currentIndex ) < size ) &&
 				( data[currentIndex].compareTo( getLeft( currentIndex ) ) < 0 ||
 			     data[currentIndex].compareTo( getRight( currentIndex ) ) < 0 ) ) {
-			String left = getLeft( currentIndex );
-			String right = getRight( currentIndex );
+			T left = getLeft( currentIndex );
+			T right = getRight( currentIndex );
 			if ( right == null || left.compareTo( right ) >= 0 ) {
 				swap ( currentIndex , getLeftIndex ( currentIndex ) );	
 				currentIndex = getLeftIndex ( currentIndex );
