@@ -7,7 +7,7 @@ public class MyHeap<T extends Comparable<T>> {
 	private boolean max;
 
 	public static void main(String[] args) {
-		MyHeap A = new MyHeap( false );
+		MyHeap<String> A = new MyHeap<>( false );
 		A.add( "a" );
 		A.add( "b" );
 		A.add( "ba" );
