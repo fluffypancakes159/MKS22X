@@ -54,12 +54,12 @@ public class MyHeap<T extends Comparable<T>> {
 	public MyHeap ( ) {
 		data = (T[]) new Comparable[10];
 		size = 0;
-		max = true;
+		max = false;
 	}
 
-	public MyHeap ( boolean min ) {
+	public MyHeap ( boolean min ) { // mixed up max and min heaps so max really signifies if the heap is min
 		this( );
-		max = false;
+		max = !min;
 	}
 
 	public T[] getData ( ) {
@@ -207,6 +207,12 @@ public class MyHeap<T extends Comparable<T>> {
 		}
 	}
 
+	public boolean isMin ( ) {
+		return max;
+	}
 
+	public String toString ( ) {
+		return Arrays.toString( data );
+	}
 
 }
