@@ -7,47 +7,20 @@ public class MyHeap<T extends Comparable<T>> {
 	private boolean max;
 
 	public static void main(String[] args) {
-		MyHeap<String> A = new MyHeap<>( false );
-		A.add( "a" );
-		A.add( "b" );
-		A.add( "ba" );
-		A.add( "c" );
-		A.add( "q" );
-		A.add( "bbbb" );
-		A.add( "aa" );
-		A.add( "bc");
-		A.add( "d");
-		A.add( "d");
+		MyHeap<Integer> A = new MyHeap<>( );
+		Integer[] ary = {8, 6, 5, 5, 5, 2, 0, 0, 0, 3};
 		// A.add( "e");
-		System.out.println( Arrays.toString(A.getData( )) );
-		A.remove( );
-		System.out.println( Arrays.toString(A.getData( )) );
-		A.remove( );
-		System.out.println( Arrays.toString(A.getData( )) );
-		A.remove( );
-		System.out.println( Arrays.toString(A.getData( )) );
-		A.remove( );
-		A.remove( );
-		A.remove( );
-		A.remove( );
-		A.remove( );
-		A.remove( );
-		A.remove( );
-		A.remove( );
-		System.out.println( Arrays.toString(A.getData( )) );
-		/*
-		MyHeap B = new MyHeap( false );
-		B.add( "a" );
-		B.add( "b" );
-		B.add( "ba" );
-		B.add( "c" );
-		B.add( "q" );
-		B.add( "bbbb" );
-		B.add( "aa" );
-		B.add( "bc");
-		System.out.println( Arrays.toString(B.getData( )) );
-		*/
-		// System.out.println( "c".compareTo( "ba" ) );
+		for ( int i = 0 ; i < 10 ; i++ ) {
+			// A.add( ary[i] );
+			A.add( (Integer)(int)(Math.random( ) * 10) );
+		}
+		// System.out.println( A.size( ) );
+		System.out.println( A );
+		for ( int i = 0 ; i < 10 ; i++ ) {
+			System.out.println( "Elem: " + A.remove( ) );
+		}
+		// System.out.println( Arrays.toString(A.getData( )) );
+		
 	}
 
 	@SuppressWarnings( "unchecked")
@@ -92,18 +65,22 @@ public class MyHeap<T extends Comparable<T>> {
 	}
 
 	public T remove ( ) {
+		System.out.println( this );
 		if ( size == 0 ) {
 			return null;
 		}
 		T out = data[0];
+		data[0] = null;
 		swap ( 0 , size - 1 );
-		data[size - 1] = null;
 		size--;
+		// data[size - 1] = null;
 		if ( max ) {
 			pullMax( );
+			// System.out.println( "min" );
 		}
 		else {
 			pullMin( );
+			// System.out.println( "max" );
 		}
 		return out;
 	}
@@ -171,41 +148,82 @@ public class MyHeap<T extends Comparable<T>> {
 
 	private void pullMax ( ) {
 		int currentIndex = 0;
-		while ( ( getLeftIndex ( currentIndex ) < size &&
-			     getRightIndex ( currentIndex ) < size ) &&
-				( data[currentIndex].compareTo( getLeft( currentIndex ) ) > 0 ||
-			     data[currentIndex].compareTo( getRight( currentIndex ) ) > 0 ) ) {
+		while ( hasLeft( currentIndex ) ||
+			    hasRight( currentIndex ) ) {
+			System.out.println( "In while loop" );
 			T left = getLeft( currentIndex );
 			T right = getRight( currentIndex );
-			if ( right == null || left.compareTo( right ) <= 0 ) {
-				swap ( currentIndex , getLeftIndex ( currentIndex ) );	
-				currentIndex = getLeftIndex ( currentIndex );
+			if ( right == null ) {
+				if ( data[currentIndex].compareTo( left ) >= 0 ) {
+					swap ( currentIndex , getLeftIndex ( currentIndex ) );	
+					currentIndex = getLeftIndex ( currentIndex );
+				}
+				else {
+					return;
+				}
 			}
 			else {
-				swap ( currentIndex , getRightIndex ( currentIndex ) );	
-				currentIndex = getRightIndex ( currentIndex );
+				if ( data[currentIndex].compareTo( left ) >= 0 && left.compareTo( right ) <= 0 ) {
+					swap ( currentIndex , getLeftIndex ( currentIndex ) );	
+					currentIndex = getLeftIndex ( currentIndex );
+				}
+				else if ( data[currentIndex].compareTo( right ) >= 0 ) {
+					swap ( currentIndex , getRightIndex ( currentIndex ) );	
+					currentIndex = getRightIndex ( currentIndex );
+				}
+				else {
+					return;
+				}
 			}
 		}
 	}
 
 	private void pullMin ( ) {
 		int currentIndex = 0;
-		while ( ( getLeftIndex ( currentIndex ) < size &&
-			     getRightIndex ( currentIndex ) < size ) &&
-				( data[currentIndex].compareTo( getLeft( currentIndex ) ) < 0 ||
-			     data[currentIndex].compareTo( getRight( currentIndex ) ) < 0 ) ) {
+		while ( hasLeft( currentIndex ) ||
+			    hasRight( currentIndex ) ) {
+			System.out.println( "In while loop" );
 			T left = getLeft( currentIndex );
 			T right = getRight( currentIndex );
-			if ( right == null || left.compareTo( right ) >= 0 ) {
-				swap ( currentIndex , getLeftIndex ( currentIndex ) );	
-				currentIndex = getLeftIndex ( currentIndex );
+			if ( right == null ) {
+				if ( data[currentIndex].compareTo( left ) <= 0 ) {
+					swap ( currentIndex , getLeftIndex ( currentIndex ) );	
+					currentIndex = getLeftIndex ( currentIndex );
+				}
+				else {
+					return;
+				}
 			}
 			else {
-				swap ( currentIndex , getRightIndex ( currentIndex ) );	
-				currentIndex = getRightIndex ( currentIndex );
+				if ( data[currentIndex].compareTo( left ) <= 0 && left.compareTo( right ) >= 0 ) {
+					swap ( currentIndex , getLeftIndex ( currentIndex ) );	
+					currentIndex = getLeftIndex ( currentIndex );
+				}
+				else if ( data[currentIndex].compareTo( right ) <= 0 ) {
+					swap ( currentIndex , getRightIndex ( currentIndex ) );	
+					currentIndex = getRightIndex ( currentIndex );
+				}
+				else {
+					return;
+				}
 			}
 		}
 	}
+
+	private boolean hasLeft ( int index ) {
+		if ( index * 2 + 1 >= size || data[index * 2 + 1] == null ) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean hasRight ( int index ) {
+		if ( index * 2 + 2 >= size || data[index * 2 + 2] == null ) {
+			return false;
+		}
+		return true;
+	}
+
 
 	public boolean isMin ( ) {
 		return max;
