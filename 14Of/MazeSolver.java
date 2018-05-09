@@ -1,14 +1,25 @@
+import java.util.*;
+
 public class MazeSolver {
 
     private Maze maze;
     private Frontier frontier;
 
+    public static void main(String[] args) {
+        MazeSolver A = new MazeSolver ( "testMaze.txt" );
+        System.out.println( A.solve( ) );
+        // A.tracePath( );
+        System.out.println( A );
+    }
+
     public MazeSolver(String mazeText){
-    
+        maze = new Maze ( mazeText );
     }
 
     //Default to BFS
-    public boolean solve( ){ return solve(0); }
+    public boolean solve( ){ 
+        return solve(0); 
+    }
 
     //mode: required to allow for alternate solve modes.
     //0: BFS
@@ -21,11 +32,40 @@ public class MazeSolver {
         //  check if any locations are the end, if you found the end just return true!
         //  add all the locations to the frontier
         //when there are no more values in the frontier return false
+        if ( mode == 0 ) {
+            frontier = new QueueFrontier( );
+        }
+        if ( mode == 1 ) {
+            frontier = new StackFrontier( );
+        }
+        frontier.add( maze.start );
+        while ( frontier.hasNext( ) ) {
+            Location current = frontier.next( );
+            System.out.println( current );
+            Location[] neighbors = maze.getNeighbors( current );
+            for ( Location loc : neighbors ) {
+                if ( loc != null ) {
+                    if ( loc.equals( maze.end ) ) {
+                        tracePath( loc.getPrev( ) );
+                        return true;
+                    }
+                    frontier.add( loc ); 
+                }
+            }
+        }
         return false;
     }
 
     public String toString( ){
-        return "";
+        return maze.toString( );
+    }
+
+    public void tracePath ( Location ending ) {
+        Location current = ending;
+        while ( !current.equals( maze.start ) ) {
+            maze.set( current.getX( ) , current.getY( ) , '@' );
+            current = current.getPrev( );
+        }
     }
 
 }
