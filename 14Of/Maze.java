@@ -20,20 +20,24 @@ public class Maze{
         int size = 0;
         int currentX = L.getX( );
         int currentY = L.getY( );
-        if ( currentX + 1 < maze[0].length && maze[currentX + 1][currentY] != '#' ) {
-            locations[size] = new Location ( currentX + 1 , currentY , L );
+        if ( currentX + 1 < maze[0].length && ( maze[currentX + 1][currentY] == ' ' ||
+                                                maze[currentX + 1][currentY] == 'E' ) ) {
+            locations[size] = new Location ( currentX + 1 , currentY , L.getDist(end) , L );
             size++;
         }
-        if ( currentY + 1 < maze.length && maze[currentX][currentY + 1] != '#' ) {
-            locations[size] = new Location ( currentX , currentY + 1, L );
+        if ( currentY + 1 < maze.length && ( maze[currentX][currentY + 1] == ' ' ||
+                                             maze[currentX][currentY + 1] == 'E' ) ) {
+            locations[size] = new Location ( currentX , currentY + 1 , L.getDist(end) , L );
             size++;
         }
-        if ( currentX > 0 && maze[currentX - 1][currentY] != '#' ) {
-            locations[size] = new Location ( currentX - 1 , currentY , L );
+        if ( currentX > 0 && ( maze[currentX - 1][currentY] == ' ' ||
+                               maze[currentX - 1][currentY] == 'E' ) ) {
+            locations[size] = new Location ( currentX - 1 , currentY , L.getDist(end) , L );
             size++;
         }
-        if ( currentY > 0 && maze[currentX][currentY - 1] != '#' ) {
-            locations[size] = new Location ( currentX , currentY - 1 , L );
+        if ( currentY > 0 && ( maze[currentX][currentY - 1] == ' ' ||
+                               maze[currentX][currentY - 1] == 'E' ) ) {
+            locations[size] = new Location ( currentX , currentY - 1 , L.getDist(end) , L );
             size++;
         }
         return locations;
@@ -113,8 +117,10 @@ public class Maze{
     The start/end Locations may need more information later when we add
     other kinds of frontiers!
     */
-        end = new Location(endr,endc,null);
-        start = new Location(startr,startc,null);
+        end = new Location(endr,endc,0,null);
+        start = new Location(startr,startc,
+                            Math.abs( (startr - endr) + (startc - endc) ) 
+                            , null);
     }
 
   public String toStringColor(){

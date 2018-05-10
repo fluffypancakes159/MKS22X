@@ -9,7 +9,7 @@ public class MazeSolver {
         MazeSolver A = new MazeSolver ( "testMaze.txt" );
         System.out.println( A.solve( ) );
         // A.tracePath( );
-        System.out.println( A );
+        // System.out.println( A );
     }
 
     public MazeSolver(String mazeText){
@@ -24,6 +24,7 @@ public class MazeSolver {
     //mode: required to allow for alternate solve modes.
     //0: BFS
     //1: DFS
+    //2: Best-First
     public boolean solve(int mode){
         //initialize your frontier
         //while there is stuff in the frontier:
@@ -38,8 +39,12 @@ public class MazeSolver {
         if ( mode == 1 ) {
             frontier = new StackFrontier( );
         }
+        if ( mode == 2 ) {
+            frontier = new FrontierPriorityQueue( );
+        }
         frontier.add( maze.start );
         while ( frontier.hasNext( ) ) {
+            System.out.println( maze.toStringColor( ));
             Location current = frontier.next( );
             System.out.println( current );
             Location[] neighbors = maze.getNeighbors( current );
@@ -49,7 +54,11 @@ public class MazeSolver {
                         tracePath( loc.getPrev( ) );
                         return true;
                     }
-                    frontier.add( loc ); 
+                    frontier.add( loc );
+                    maze.set( loc.getX( ), loc.getY( ), '?'); 
+                }
+                if ( maze.get( current.getX( ) , current.getY( ) ) != 'S' ) {
+                    maze.set( current.getX( ), current.getY( ), '.'); 
                 }
             }
         }
@@ -65,6 +74,7 @@ public class MazeSolver {
         while ( !current.equals( maze.start ) ) {
             maze.set( current.getX( ) , current.getY( ) , '@' );
             current = current.getPrev( );
+            System.out.println( maze.toStringColor( ) );
         }
     }
 
