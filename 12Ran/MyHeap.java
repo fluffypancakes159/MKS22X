@@ -7,16 +7,16 @@ public class MyHeap<T extends Comparable<T>> {
 	private boolean max;
 
 	public static void main(String[] args) {
-		MyHeap<Integer> A = new MyHeap<>( );
-		Integer[] ary = {8, 6, 5, 5, 5, 2, 0, 0, 0, 3};
+		MyHeap<Integer> A = new MyHeap<>( false );
+		Integer[] ary = {3, 0};
 		// A.add( "e");
-		for ( int i = 0 ; i < 10 ; i++ ) {
-			// A.add( ary[i] );
-			A.add( (Integer)(int)(Math.random( ) * 10) );
+		for ( int i = 0 ; i < ary.length ; i++ ) {
+			A.add( ary[i] );
+			// A.add( (Integer)(int)(Math.random( ) * 10) );
 		}
 		// System.out.println( A.size( ) );
 		System.out.println( A );
-		for ( int i = 0 ; i < 10 ; i++ ) {
+		for ( int i = 0 ; i < ary.length ; i++ ) {
 			System.out.println( "Elem: " + A.remove( ) );
 		}
 		// System.out.println( Arrays.toString(A.getData( )) );

@@ -7,7 +7,7 @@ public class MazeSolver {
 
     public static void main(String[] args) {
         MazeSolver A = new MazeSolver ( "testMaze.txt" );
-        System.out.println( A.solve( ) );
+        System.out.println( A.solve( 2 ) );
         // A.tracePath( );
         // System.out.println( A );
     }
@@ -45,6 +45,7 @@ public class MazeSolver {
         frontier.add( maze.start );
         while ( frontier.hasNext( ) ) {
             System.out.println( maze.toStringColor( ));
+            System.out.println( frontier );
             Location current = frontier.next( );
             System.out.println( current );
             Location[] neighbors = maze.getNeighbors( current );

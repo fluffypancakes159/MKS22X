@@ -20,4 +20,12 @@ public class QueueFrontier implements Frontier {
 		return locations.remove( );
 	}
 
+	public String toString ( ) {
+		String out = "";
+		for ( Location loc : locations ) {
+			out += loc + "\n";
+		}
+		return out;
+	}
+
 }

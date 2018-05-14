@@ -20,12 +20,12 @@ public class Maze{
         int size = 0;
         int currentX = L.getX( );
         int currentY = L.getY( );
-        if ( currentX + 1 < maze[0].length && ( maze[currentX + 1][currentY] == ' ' ||
+        if ( currentX + 1 < maze.length && ( maze[currentX + 1][currentY] == ' ' ||
                                                 maze[currentX + 1][currentY] == 'E' ) ) {
             locations[size] = new Location ( currentX + 1 , currentY , L.getDist(end) , L );
             size++;
         }
-        if ( currentY + 1 < maze.length && ( maze[currentX][currentY + 1] == ' ' ||
+        if ( currentY + 1 < maze[0].length && ( maze[currentX][currentY + 1] == ' ' ||
                                              maze[currentX][currentY + 1] == 'E' ) ) {
             locations[size] = new Location ( currentX , currentY + 1 , L.getDist(end) , L );
             size++;

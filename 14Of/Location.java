@@ -24,7 +24,7 @@ public class Location implements Comparable<Location>{
     }
 
     public int getDist ( Location other ) {
-        return (x - other.x) + (y - other.y);
+        return Math.abs(x - other.x) + Math.abs(y - other.y);
     }
 
     public Location getPrev ( ) {
@@ -36,7 +36,8 @@ public class Location implements Comparable<Location>{
     }
 
     public String toString ( ) {
-    	return "X: " + x + " / Y: " + y; 
+    	return "" + dist;
+        // return "X: " + x + " / Y: " + y; 
     }
 
     public int compareTo ( Location other ) {
