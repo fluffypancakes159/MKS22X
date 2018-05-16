@@ -7,8 +7,7 @@ public class Maze{
     private static final String SHOW_CURSOR =  "\033[?25h";
     Location start,end;
     private char[][]maze;
-
-
+    private boolean setAStar;
 
   /*
   YOU MUST COMPLETE THIS METHOD!!!
@@ -21,23 +20,43 @@ public class Maze{
         int currentX = L.getX( );
         int currentY = L.getY( );
         if ( currentX + 1 < maze.length && ( maze[currentX + 1][currentY] == ' ' ||
-                                                maze[currentX + 1][currentY] == 'E' ) ) {
-            locations[size] = new Location ( currentX + 1 , currentY , L.getDist(end) , L );
+                                             maze[currentX + 1][currentY] == 'E' ) ) { 
+            if ( setAStar ) {
+                locations[size] = new Location ( currentX + 1 , currentY , L.getDist(end) , L , L.getDistSoFar( ) + 1 );              
+            }
+            else {
+                locations[size] = new Location ( currentX + 1 , currentY , L.getDist(end) , L ); 
+            }
             size++;
         }
         if ( currentY + 1 < maze[0].length && ( maze[currentX][currentY + 1] == ' ' ||
-                                             maze[currentX][currentY + 1] == 'E' ) ) {
-            locations[size] = new Location ( currentX , currentY + 1 , L.getDist(end) , L );
+                                                maze[currentX][currentY + 1] == 'E' ) ) {
+            if ( setAStar ) {
+                locations[size] = new Location ( currentX , currentY + 1 , L.getDist(end) , L , L.getDistSoFar( ) + 1 );
+            }
+            else {  
+                locations[size] = new Location ( currentX , currentY + 1 , L.getDist(end) , L );
+            }
             size++;
         }
         if ( currentX > 0 && ( maze[currentX - 1][currentY] == ' ' ||
                                maze[currentX - 1][currentY] == 'E' ) ) {
-            locations[size] = new Location ( currentX - 1 , currentY , L.getDist(end) , L );
+            if ( setAStar ) {
+                locations[size] = new Location ( currentX - 1 , currentY , L.getDist(end) , L , L.getDistSoFar( ) + 1 );              
+            }
+            else {
+                locations[size] = new Location ( currentX - 1 , currentY , L.getDist(end) , L ); 
+            }
             size++;
         }
         if ( currentY > 0 && ( maze[currentX][currentY - 1] == ' ' ||
                                maze[currentX][currentY - 1] == 'E' ) ) {
-            locations[size] = new Location ( currentX , currentY - 1 , L.getDist(end) , L );
+            if ( setAStar ) {
+                locations[size] = new Location ( currentX , currentY - 1 , L.getDist(end) , L , L.getDistSoFar( ) + 1 );
+            }
+            else {  
+                locations[size] = new Location ( currentX , currentY - 1 , L.getDist(end) , L );
+            }
             size++;
         }
         return locations;
@@ -121,6 +140,7 @@ public class Maze{
         start = new Location(startr,startc,
                             Math.abs( (startr - endr) + (startc - endc) ) 
                             , null);
+        setAStar = false;
     }
 
   public String toStringColor(){
@@ -188,6 +208,10 @@ public class Maze{
       ans += line+color(37,40)+"\n";
     }
     return ans;
+  }
+
+  public void setAStar ( boolean bool ) {
+    setAStar = bool;
   }
 
 }

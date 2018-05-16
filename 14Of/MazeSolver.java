@@ -7,7 +7,7 @@ public class MazeSolver {
 
     public static void main(String[] args) {
         MazeSolver A = new MazeSolver ( "testMaze.txt" );
-        System.out.println( A.solve( 2 ) );
+        System.out.println( A.solve( 3 ) );
         // A.tracePath( );
         // System.out.println( A );
     }
@@ -42,9 +42,13 @@ public class MazeSolver {
         if ( mode == 2 ) {
             frontier = new FrontierPriorityQueue( );
         }
+        if ( mode == 3 ) {
+            frontier = new FrontierPriorityQueue( );
+            maze.setAStar( true );
+        }
         frontier.add( maze.start );
         while ( frontier.hasNext( ) ) {
-            System.out.println( maze.toStringColor( ));
+            System.out.println( maze.toStringColor( 100 ));
             System.out.println( frontier );
             Location current = frontier.next( );
             System.out.println( current );
