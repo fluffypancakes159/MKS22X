@@ -37,7 +37,7 @@ public class Sorts {
 		System.out.println( heap );
 		for ( int i = 0 ; i < ary.length ; i++ ) {
 			ary[ary.length - 1 - i] = heap.remove( );
-			System.out.println( Arrays.toString( ary ) );
+			// System.out.println( Arrays.toString( ary ) );
 		}
 	}
 
