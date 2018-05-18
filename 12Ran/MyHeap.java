@@ -65,7 +65,7 @@ public class MyHeap<T extends Comparable<T>> {
 	}
 
 	public T remove ( ) {
-		System.out.println( this );
+		// System.out.println( this );
 		if ( size == 0 ) {
 			return null;
 		}
@@ -150,7 +150,7 @@ public class MyHeap<T extends Comparable<T>> {
 		int currentIndex = 0;
 		while ( hasLeft( currentIndex ) ||
 			    hasRight( currentIndex ) ) {
-			System.out.println( "In while loop" );
+			// System.out.println( "In while loop" );
 			T left = getLeft( currentIndex );
 			T right = getRight( currentIndex );
 			if ( right == null ) {
@@ -182,7 +182,7 @@ public class MyHeap<T extends Comparable<T>> {
 		int currentIndex = 0;
 		while ( hasLeft( currentIndex ) ||
 			    hasRight( currentIndex ) ) {
-			System.out.println( "In while loop" );
+			// System.out.println( "In while loop" );
 			T left = getLeft( currentIndex );
 			T right = getRight( currentIndex );
 			if ( right == null ) {
