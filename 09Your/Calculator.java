@@ -3,10 +3,11 @@ import java.util.LinkedList;
 public class Calculator {
 
 	public static void main(String[] args) {
-		System.out.println( eval( "1 2 + 3 +") );
+		System.out.println( eval( "1.0") );
 		System.out.println( eval( "1 2 * 3 +") );
 		System.out.println( eval( "5 2 * 6 + 4 / ") );
 		System.out.println( eval( "5 2 % 6 + 2 / ") );
+		
 	}
 
 	public static double eval ( String exp ) {
@@ -14,6 +15,8 @@ public class Calculator {
 		String currentToken = ""; 
 		char currentChar = ' ';
 		for ( int i = 0 ; i < exp.length( ) ; i++ ) {
+			// System.out.println( stack );
+			// System.out.println( currentToken );
 			currentChar = exp.charAt(i);
 			// System.out.println( "Char: |" + currentChar + "|" );
 			// System.out.println( "Token: |" + currentToken + "|" );
@@ -22,7 +25,7 @@ public class Calculator {
 				// System.out.println ( stack );
 				currentToken = ""; 
 			}
-			else if ( currentChar > 47 ) {
+			else if ( currentChar > 47 || currentChar == '.' ) {
 				currentToken += currentChar;
 			}
 			else {			
@@ -51,6 +54,9 @@ public class Calculator {
 				i++;
 			}
 		}
+		if ( stack.size == 0 ) {
+			return Double.parseDouble( currentToken );
+		}
 		return stack.getFirst( );
 	}
 
@@ -58,31 +64,36 @@ public class Calculator {
 
 		double[] data;
 		int size;
-		int end;
+		// int end;
 
 		public Stack ( int size ) {
 			this.data = new double[size];
 			this.size = 0;
-			this.end = -1;
+			// this.end = 0;
 		}
 
 		public void push ( double num ) {
-			end++;
-			data[end] = num;
+			data[size] = num;
+			// end++;
 			size++;
 			return;
 		}
 
 		public double pop ( ) {
-			double elem = data[end];
-			data[end] = 0;
-			end--;
-			size--;
+			double elem = data[size];
+			data[size] = 0.0;
+			if ( size > 0 ) {
+				size--;
+			}
+			// size--;
 			return elem;
 		}
 
 		public double getFirst ( ) {
-			return data[end];
+			if ( size == 0 ) {
+				
+			}
+			return data[size];
 		}
 
 		public String toString ( ) {
