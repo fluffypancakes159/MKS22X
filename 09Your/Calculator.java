@@ -3,7 +3,7 @@ import java.util.LinkedList;
 public class Calculator {
 
 	public static void main(String[] args) {
-		System.out.println( eval( "1.0") );
+		System.out.println( eval( "12") );
 		System.out.println( eval( "1 2 * 3 +") );
 		System.out.println( eval( "5 2 * 6 + 4 / ") );
 		System.out.println( eval( "5 2 % 6 + 2 / ") );
@@ -16,11 +16,11 @@ public class Calculator {
 		char currentChar = ' ';
 		for ( int i = 0 ; i < exp.length( ) ; i++ ) {
 			// System.out.println( stack );
-			// System.out.println( currentToken );
 			currentChar = exp.charAt(i);
 			// System.out.println( "Char: |" + currentChar + "|" );
 			// System.out.println( "Token: |" + currentToken + "|" );
 			if ( currentChar == ' ' ) {
+				// System.out.println( currentToken );
 				stack.push( Double.parseDouble( currentToken ) );
 				// System.out.println ( stack );
 				currentToken = ""; 
@@ -29,34 +29,32 @@ public class Calculator {
 				currentToken += currentChar;
 			}
 			else {			
+				double second = stack.pop( );
+				double first = stack.pop( );
 				if ( currentChar == '+' ) {
-					stack.push( stack.pop( ) + stack.pop( ) );
+					stack.push( first + second );
 				}
 				else if ( currentChar == '*' ) {
-					stack.push( stack.pop( ) * stack.pop( ) );
+					stack.push( first * second );
 				}
 				else if ( currentChar == '-' ) {
-					double second = stack.pop( );
-					double first = stack.pop( );
 					stack.push( first - second );
 				}
 				else if ( currentChar == '/' ) {
-					double second = stack.pop( );
-					double first = stack.pop( );
 					stack.push( first / second );
 				}
 				else if ( currentChar == '%' ) {
-					double second = stack.pop( );
-					double first = stack.pop( );
 					stack.push( first % second );
 				}
 				// System.out.println ( stack );
+				currentToken = "";
 				i++;
 			}
 		}
+		// System.out.println ( stack );
 		if ( stack.size == 0 ) {
 			return Double.parseDouble( currentToken );
-		}
+		} 
 		return stack.getFirst( );
 	}
 
@@ -74,26 +72,26 @@ public class Calculator {
 
 		public void push ( double num ) {
 			data[size] = num;
+			// System.out.println( "Pushed: " + data[size] );
 			// end++;
 			size++;
 			return;
 		}
 
 		public double pop ( ) {
+			size--;
 			double elem = data[size];
+			// System.out.println( "Popped: " + elem );
 			data[size] = 0.0;
-			if ( size > 0 ) {
-				size--;
-			}
 			// size--;
 			return elem;
 		}
 
 		public double getFirst ( ) {
 			if ( size == 0 ) {
-				
+				return 0.0;
 			}
-			return data[size];
+			return data[size - 1];
 		}
 
 		public String toString ( ) {
